@@ -54,6 +54,18 @@ Parte prática de POO.
 
 Nosso programa em questão é um jogo desenvolvido usando a biblioteca [ruby2d](https://www.ruby2d.com/).
 
+Para rodar o jogo, instale a biblioteca ruby2d:
+
+```bash
+gem install ruby2d
+```
+
+E rode o jogo:
+
+```bash
+ruby game/the_boys.rb
+```
+
 ## Contributors
 
 <a href="https://github.com/bdlukaa/the-boys-game/graphs/contributors">
