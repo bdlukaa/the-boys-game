@@ -15,7 +15,7 @@ def show_title
     color: 'black'
   )
   $subtitleText.x = (Window.width - $subtitleText.width) / 2
-  $subtitleText.y = (Window.height - $subtitleText.height) / 2 + $titleText.height
+  $subtitleText.y = (Window.height - $titleText.height) / 2 + $titleText.height
 
   $logo = Image.new('assets/logo.png')
   $logo.width = 120
