@@ -14,6 +14,10 @@ class SuperHero
     update_position
   end
 
+  def remove
+    @image.remove
+  end
+
   def move_randomly
     if @direction_timer <= 0
       @direction = [:left, :right].sample

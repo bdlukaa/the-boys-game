@@ -8,6 +8,10 @@ class CompoundV
     update_position
   end
 
+  def remove
+    @image.remove
+  end
+
   def fall
     @y += 2  # Faz o Composto V cair mais lentamente
     update_position

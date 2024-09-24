@@ -16,20 +16,37 @@ set title: 'The Boys: The Game', background: 'gray', resizable: true
 GROUND_Y = Window.height - 100
 
 $state = GameState::WAITING
-entry_screen = EntryScreen.new
+$entry_screen = EntryScreen.new
+
+def reset
+  set background: 'gray'
+  $backgroundImage.remove if $backgroundImage
+  $ground.remove if $ground
+  $hugie.remove if $hugie
+  $superhero.remove if $superhero
+  $life_bar_hugie.remove if $life_bar_hugie
+  $life_bar_superhero.remove if $life_bar_superhero
+  $compound_v.remove if $compound_v
+  $alert_text.remove if $alert_text
+  $time_text.remove if $time_text
+  $pause_overlay.hide if $pause_overlay
+  
+  if $entry_screen
+    $entry_screen.show
+  else
+    $entry_screen = EntryScreen.new
+  end
+
+  $state = GameState::WAITING
+end
 
 on :key_down do |event|
   if $state == GameState::WAITING
-    entry_screen.remove
+    $entry_screen.remove
     $state = GameState::PLAYING
     start_game
   elsif event.key == 'escape'
-    $state = $state == GameState::PAUSED ? GameState::PLAYING : GameState::PAUSED
-    if $state == GameState::PAUSED
-      $pause_overlay = PauseOverlay.new
-    else
-      $pause_overlay.hide if $pause_overlay
-    end
+    toggle_pause
   end
 end
 

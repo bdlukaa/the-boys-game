@@ -21,6 +21,11 @@ class EntryScreen
     @subtitleText.y = (Window.height - @titleText.height) / 2 + @titleText.height
   end
 
+  def show
+    @titleText.add
+    @subtitleText.add
+  end
+
   def remove
     @titleText.remove
     @subtitleText.remove

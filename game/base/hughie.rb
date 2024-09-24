@@ -14,6 +14,10 @@ class Hugie
     update_position
   end
 
+  def remove
+    @image.remove
+  end
+
   def move_left
     @x = [@x - @speed, 0].max
     update_position

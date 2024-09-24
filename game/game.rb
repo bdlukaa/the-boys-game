@@ -4,10 +4,10 @@ require_relative 'base/ground'
 require_relative 'base/compound_v'
 
 def start_game
-  Image.new('assets/background.png', width: Window.width, height: Window.height)
+  $backgroundImage = Image.new('assets/background.png', width: Window.width, height: Window.height)
 
   # Adiciona a imagem do chão
-  Ground.new
+  $ground = Ground.new
 
   # Instancia os objetos do jogo
   $hugie = Hugie.new

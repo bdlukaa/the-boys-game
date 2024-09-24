@@ -5,4 +5,8 @@ class Ground
       @image = Image.new('assets/ground.png', width: Window.width, height: 100)
       @image.y = GROUND_Y
     end
-  end
+
+    def remove
+      @image.remove
+    end
+end
