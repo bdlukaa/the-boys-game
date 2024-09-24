@@ -5,7 +5,7 @@ class SuperHero
     @image = Image.new('assets/superhero.png', width: 80, height: 80)
     @x = rand(Window.width - @image.width)
     @y = GROUND_Y - @image.height
-    @life = 200
+    @life = 100
     @attack_power = 5
     @speed = 3
     @last_attack_time = Time.now
