@@ -47,7 +47,7 @@ formas = [
 ]
 
 #método calcular_area é chamado de forma polimórfica para cada obj em formas
-#ruby sabe chama o método correto
+#ruby sabe chamar o método correto
 formas.each do |forma|
   puts "Área da forma: #{forma.calcular_area}"
 end
