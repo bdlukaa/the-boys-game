@@ -22,7 +22,7 @@ class PauseOverlay
       color: 'white',
       z: 20
     )
-    center_text(@pause_text)
+    center_text_h(@pause_text)
 
     @resume_text = Text.new(
       'Resume',
@@ -31,7 +31,7 @@ class PauseOverlay
       color: 'white',
       z: 20
     )
-    center_text(@resume_text)
+    center_text_h(@resume_text)
 
     @quit_text = Text.new(
       'Quit',
@@ -40,7 +40,7 @@ class PauseOverlay
       color: 'white',
       z: 20
     )
-    center_text(@quit_text)
+    center_text_h(@quit_text)
 
     @pause_visible = false
   end
@@ -97,6 +97,6 @@ on :mouse_move do |event|
     $pause_overlay.quit_text.size = 30
   end
 
-  center_text($pause_overlay.resume_text)
-  center_text($pause_overlay.quit_text)
+  center_text_h($pause_overlay.resume_text)
+  center_text_h($pause_overlay.quit_text)
 end
