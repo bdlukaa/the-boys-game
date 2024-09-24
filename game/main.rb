@@ -11,7 +11,7 @@ require_relative 'overlays/pause_overlay'
 require_relative 'overlays/win_overlay'
 
 # Configurações da Janela para Tela Cheia
-set title: 'The Boys: The Game', background: 'gray', resizable: true
+set title: 'The Boys: The Game', background: 'gray', resizable: true, fullscreen: true, width: 1920, height: 1080
 
 # Variável para os limites do chão
 GROUND_Y = Window.height - 100

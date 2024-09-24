@@ -6,7 +6,7 @@ class LoseOverlay
 
     Window.set background: 'black'
 
-    text = 'YOU LOST!'
+    text = 'VOCÊ PERDEU :/'
 
     @texts << Text.new(
       text,

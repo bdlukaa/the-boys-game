@@ -7,25 +7,26 @@ class WinOverlay
 
     Window.set background: 'black'
 
-    text = 'YOU WIN!'
+    win_text = 'VOCÊ GANHOU!'
+    continue_text = 'Pressione qualquer tecla para continuar'
 
     @texts << Text.new(
-      text,
-      size: 100,
+      win_text,
+      size: 80,
       color: Color.new('#8B0000'),
       z: 1
     )
 
     @texts << Text.new(
-      text,
-      size: 99,
+      win_text,
+      size: 79,
       color: 'red',
       z: 2
     )
 
     @texts << Text.new(
-      text,
-      size: 98,
+      win_text,
+      size: 78,
       color: 'orange',
       z: 3
     )
@@ -33,6 +34,18 @@ class WinOverlay
     @texts.each do |text|
       center_text(text)
     end
+
+    # get first text position
+    first_text = @texts.first
+
+    continue = Text.new(
+      continue_text,
+      size: 30,
+      color: 'white',
+      y: first_text.y + first_text.height + 50,
+      z: 4
+    )
+    center_text_h(continue)
 
     @stars = []
 
@@ -55,9 +68,15 @@ class WinOverlay
     @visible = true
   end
 
-  def hide
+  def remove
     @texts.each(&:remove)
     @stars.each(&:remove)
     @visible = false
   end
+end
+
+on :key_down do |event|
+  next if $state != GameState::WIN
+  reset
+
 end
