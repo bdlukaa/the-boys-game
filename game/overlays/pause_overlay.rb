@@ -1,5 +1,7 @@
 require 'ruby2d'
 
+require_relative '../utils'
+
 class PauseOverlay
 
   attr_accessor :quit_text
@@ -20,6 +22,7 @@ class PauseOverlay
       color: 'white',
       z: 20
     )
+    center_text(@pause_text)
 
     @resume_text = Text.new(
       'Resume',
@@ -28,6 +31,7 @@ class PauseOverlay
       color: 'white',
       z: 20
     )
+    center_text(@resume_text)
 
     @quit_text = Text.new(
       'Quit',
@@ -36,9 +40,12 @@ class PauseOverlay
       color: 'white',
       z: 20
     )
+    center_text(@quit_text)
 
     @pause_visible = false
   end
+
+  private
 
   def show
     @background.add
@@ -60,13 +67,12 @@ end
 
 def toggle_pause
   $state = $state == GameState::PAUSED ? GameState::PLAYING : GameState::PAUSED
-    if $state == GameState::PAUSED
-      $pause_overlay = PauseOverlay.new
-    else
-      $pause_overlay.hide if $pause_overlay
-    end
+  if $state == GameState::PAUSED
+    $pause_overlay = PauseOverlay.new
+  else
+    $pause_overlay.hide if $pause_overlay
+  end
 end
-
 
 on :mouse_down do |event|
   next if $state != GameState::PAUSED 
@@ -76,4 +82,23 @@ on :mouse_down do |event|
   elsif $pause_overlay.quit_text.contains?(event.x, event.y)
     reset
   end
+end
+
+on :mouse_move do |event|
+  next if $state != GameState::PAUSED
+
+  if $pause_overlay.resume_text.contains?(event.x, event.y)
+    $pause_overlay.resume_text.size = 35
+  else
+    $pause_overlay.resume_text.size = 30
+  end
+
+  if $pause_overlay.quit_text.contains?(event.x, event.y)
+    $pause_overlay.quit_text.size = 35
+  else
+    $pause_overlay.quit_text.size = 30
+  end
+
+  center_text($pause_overlay.resume_text)
+  center_text($pause_overlay.quit_text)
 end
