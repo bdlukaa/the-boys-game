@@ -1,7 +1,9 @@
+require_relative 'state'
 require_relative 'base/hughie'
 require_relative 'base/superhero'
 require_relative 'base/ground'
 require_relative 'base/compound_v'
+require_relative 'overlays/lose_overlay'
 
 def start_game
   $backgroundImage = Image.new('assets/background.png', width: Window.width, height: Window.height)
@@ -61,8 +63,9 @@ def start_game
         $life_bar_hugie.color = 'red' if $hugie.life <= 20
         puts "Hugie perdeu vida! Vida restante: #{$hugie.life}"
         if $hugie.life <= 0
-          puts "Game Over! Hugie foi derrotado!"
-          close
+          clear
+          $state = GameState::LOSE
+          $lose_overlay = LoseOverlay.new
         end
       end
     end

@@ -1,13 +1,12 @@
 require 'ruby2d'
-require_relative '../utils'
 
-class WinOverlay
+class LoseOverlay
   def initialize
     @texts = []
 
     Window.set background: 'black'
 
-    text = 'YOU WIN!'
+    text = 'YOU LOST!'
 
     @texts << Text.new(
       text,
@@ -18,14 +17,14 @@ class WinOverlay
 
     @texts << Text.new(
       text,
-      size: 99,
+      size: 98,
       color: 'red',
       z: 2
     )
 
     @texts << Text.new(
       text,
-      size: 98,
+      size: 96,
       color: 'orange',
       z: 3
     )

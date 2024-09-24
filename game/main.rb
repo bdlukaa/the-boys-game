@@ -8,6 +8,7 @@ require_relative 'base/compound_v'
 
 require_relative 'overlays/entry_screen'
 require_relative 'overlays/pause_overlay'
+require_relative 'overlays/win_overlay'
 
 # Configurações da Janela para Tela Cheia
 set title: 'The Boys: The Game', background: 'gray', resizable: true
@@ -47,7 +48,7 @@ end
 $state = GameState::WAITING
 $entry_screen = EntryScreen.new
 
-def reset
+def clear
   set background: 'gray'
 
   $backgroundImage.remove if $backgroundImage
@@ -60,7 +61,11 @@ def reset
   $alert_text.remove if $alert_text
   $time_text.remove if $time_text
   $pause_overlay.hide if $pause_overlay
+end
 
+def reset
+
+  clear
   if $entry_screen
     $entry_screen.show
   else
@@ -137,8 +142,9 @@ on :mouse_down do |event|
       $life_bar_superhero.color = 'red' if $superhero.life <= 20
       puts "SuperHero perdeu vida! Vida restante: #{$superhero.life}"
       if $superhero.life <= 0
-        puts "SuperHero foi derrotado!"
-        close
+        clear
+        $win_overlay = WinOverlay.new
+        $state = GameState::WIN
       end
     end
   end
