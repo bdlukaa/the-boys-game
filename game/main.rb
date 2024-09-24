@@ -1,9 +1,11 @@
 require 'ruby2d'
+require_relative 'state'
 require_relative 'base/hughie'
 require_relative 'base/superhero'
-require_relative 'base/essentials'
 require_relative 'base/ground'
 require_relative 'base/compound_v'
+
+require_relative 'overlays/entry_screen'
 
 # Configurações da Janela
 set title: 'The Boys: The Game', background: 'gray', resizable: true
@@ -12,20 +14,15 @@ set title: 'The Boys: The Game', background: 'gray', resizable: true
 GROUND_Y = Window.height - 100
 
 # Variáveis globais
-$paused = false
-$pause_text = nil
-$game_started = false
-
-# Exibe o título
-show_title
+$state = GameState::WAITING
+entry_screen = EntryScreen.new
 
 # Oculta o título e começa o jogo quando uma tecla é pressionada
 on :key_down do |event|
-  if !$game_started
-    hide_title
-    $logo.remove
+  if $state == GameState::WAITING
+    entry_screen.remove
+    $state = GameState::PLAYING
     start_game
-    $game_started = true
   elsif event.key == 'escape'
     toggle_pause
   end
@@ -33,7 +30,8 @@ end
 
 # Movimentação e Atualização
 on :key_held do |event|
-  next if $paused
+  next if $state != GameState::PLAYING
+
   case event.key
   when 'left', 'a'
     $hugie.move_left if $hugie
@@ -177,15 +175,6 @@ def start_game
     puts "Hugie position: #{$hugie.x}, #{$hugie.y}"
     puts "SuperHero position: #{$superhero.x}, #{$superhero.y}"
   end
-end
-
-def toggle_pause
-  if $paused
-    hide_pause_menu
-  else
-    show_pause_menu
-  end
-  $paused = !$paused
 end
 
 def show_pause_menu
