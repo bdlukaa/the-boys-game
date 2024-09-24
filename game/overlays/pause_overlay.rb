@@ -45,8 +45,6 @@ class PauseOverlay
     @pause_visible = false
   end
 
-  private
-
   def show
     @background.add
     @pause_text.add
