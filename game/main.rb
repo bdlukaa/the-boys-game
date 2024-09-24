@@ -50,17 +50,47 @@ on :key_down do |event|
   end
 end
 
+# Variáveis para rastrear o conjunto de teclas em uso
+$using_wasd = false
+$using_arrows = false
+
 # Movimentação e Atualização
 on :key_held do |event|
   next if $state != GameState::PLAYING
 
   case event.key
-  when 'left', 'a'
-    $hugie.move_left if $hugie
-  when 'right', 'd'
-    $hugie.move_right if $hugie
+  when 'left'
+    unless $using_wasd
+      $using_arrows = true
+      $hugie.move_left if $hugie
+    end
+  when 'right'
+    unless $using_wasd
+      $using_arrows = true
+      $hugie.move_right if $hugie
+    end
+  when 'a'
+    unless $using_arrows
+      $using_wasd = true
+      $hugie.move_left if $hugie
+    end
+  when 'd'
+    unless $using_arrows
+      $using_wasd = true
+      $hugie.move_right if $hugie
+    end
   when 'space'
     $hugie.jump if $hugie&.on_ground?
+  end
+end
+
+# Reset das variáveis quando as teclas são liberadas
+on :key_up do |event|
+  case event.key
+  when 'left', 'right'
+    $using_arrows = false
+  when 'a', 'd'
+    $using_wasd = false
   end
 end
 
@@ -81,7 +111,5 @@ on :mouse_down do |event|
     end
   end
 end
-
-
 
 show
