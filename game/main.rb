@@ -82,7 +82,7 @@ on :key_down do |event|
     $state = GameState::PLAYING
     $hugie.show            # Mostra o Hugie ao começar o jogo
     start_game
-  elsif event.key == 'escape'
+  elsif ($state == GameState::PLAYING || $state == GameState::PLAYING) && event.key == 'escape'
     toggle_pause
   end
 end
