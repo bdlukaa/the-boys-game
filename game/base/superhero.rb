@@ -10,7 +10,7 @@ class SuperHero
     @speed = 3
     @last_attack_time = Time.now
     @direction = [:left, :right].sample
-    @direction_timer = rand(60..120)  # Muda de direção a cada 1 a 2 segundos
+    @direction_timer = rand(60..120)
     update_position
   end
 
@@ -19,44 +19,50 @@ class SuperHero
   end
 
   def move_randomly
-    if @direction_timer <= 0
-      @direction = [:left, :right].sample
-      @direction_timer = rand(60..120)
-    end
+    change_direction if @direction_timer <= 0
 
-    case @direction
-    when :left
-      @x = [@x - @speed, 0].max
-    when :right
-      @x = [@x + @speed, Window.width - @image.width].min
-    end
-
+    move
     @direction_timer -= 1
     update_position
   end
+
+  def lose_life(amount)
+    @life = [@life - amount, 0].max
+  end
+
+  def attack(target)
+    if can_attack? && close_to?(target)
+      target.lose_life(@attack_power)
+      @last_attack_time = Time.now
+    end
+  end
+
+  private
 
   def update_position
     @image.x = @x
     @image.y = @y
   end
 
-  def lose_life(amount)
-    @life -= amount
-    @life = 0 if @life < 0
+  def change_direction
+    @direction = [:left, :right].sample
+    @direction_timer = rand(60..120)
   end
 
-  def attack(hugie)
-    if can_attack? && close_to?(hugie)
-      hugie.lose_life(@attack_power)
-      @last_attack_time = Time.now
+  def move
+    case @direction
+    when :left
+      @x = [@x - @speed, 0].max
+    when :right
+      @x = [@x + @speed, Window.width - @image.width].min
     end
   end
 
   def can_attack?
-    Time.now - @last_attack_time > 1  # Cooldown de 1 segundo
+    Time.now - @last_attack_time > 1
   end
 
-  def close_to?(hugie)
-    (@x - hugie.x).abs < 50  # Verifica se a distância é menor que 50 pixels
+  def close_to?(target)
+    (@x - target.x).abs < 50
   end
 end

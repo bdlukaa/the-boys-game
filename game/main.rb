@@ -5,15 +5,13 @@ require_relative 'base/hughie'
 require_relative 'base/superhero'
 require_relative 'base/ground'
 require_relative 'base/compound_v'
-
 require_relative 'overlays/entry_screen'
 require_relative 'overlays/pause_overlay'
 require_relative 'overlays/win_overlay'
 
-# Configurações da Janela para Tela Cheia
+# Window Configuration
 set title: 'The Boys: The Game', background: 'gray', resizable: true, fullscreen: true, width: 1920, height: 1080
 
-# Variável para os limites do chão
 GROUND_Y = Window.height - 100
 
 $backgrounds = [
@@ -22,18 +20,15 @@ $backgrounds = [
   Image.new('assets/background4.png', width: Window.width, height: Window.height)
 ]
 
-# Carrega os pássaros
 $birds = [
   Sprite.new('assets/bird1.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true),
   Sprite.new('assets/bird2.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true),
   Sprite.new('assets/bird3.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true)
 ]
 
-# Cria o personagem Hugie (ele será escondido até que o jogo comece)
-$hugie = Hugie.new
+$hugie = Hughie.new
 $hugie.hide
 
-# Atualiza a posição dos elementos continuamente
 update do
   if $state == GameState::PLAYING
     GROUND_Y = Window.height - 100
@@ -47,48 +42,31 @@ $entry_screen = EntryScreen.new
 
 def clear
   set background: 'gray'
-
-  $backgroundImage.remove if $backgroundImage
-  $ground.remove if $ground
-  $hugie.hide if $hugie         # Esconde o Hugie ao reiniciar o jogo
-  $superhero.remove if $superhero
-  $life_bar_hugie.remove if $life_bar_hugie
-  $life_bar_superhero.remove if $life_bar_superhero
-  $compound_v.remove if $compound_v
-  $alert_text.remove if $alert_text
-  $time_text.remove if $time_text
+  [$backgroundImage, $ground, $superhero, $life_bar_hugie, $life_bar_superhero, $compound_v, $alert_text, $time_text].each(&:remove)
+  $hugie.hide if $hugie
   $pause_overlay.hide if $pause_overlay
 end
 
 def reset
-
   clear
-  if $entry_screen
-    $entry_screen.show
-  else
-    $entry_screen = EntryScreen.new
-  end
-
+  $entry_screen ? $entry_screen.show : $entry_screen = EntryScreen.new
   $state = GameState::WAITING
 end
 
-# Iniciar o jogo quando a tecla for pressionada
 on :key_down do |event|
   if $state == GameState::WAITING
-    $entry_screen.remove  # Remove a tela de entrada
+    $entry_screen.remove
     $state = GameState::PLAYING
-    $hugie.show            # Mostra o Hugie ao começar o jogo
+    $hugie.show
     start_game
-  elsif ($state == GameState::PLAYING || $state == GameState::PLAYING) && event.key == 'escape'
+  elsif $state == GameState::PLAYING && event.key == 'escape'
     toggle_pause
   end
 end
 
-# Variáveis para rastrear o conjunto de teclas em uso
 $using_wasd = false
 $using_arrows = false
 
-# Movimentação e Atualização
 on :key_held do |event|
   next if $state != GameState::PLAYING
 
@@ -118,17 +96,14 @@ on :key_held do |event|
   end
 end
 
-# Reset das variáveis quando as teclas são liberadas
 on :key_up do |event|
-  case event.key
-  when 'left', 'right', 'a', 'd'
+  if %w[left right a d].include?(event.key)
     $hugie.change_state(:idle) if $hugie.state == :walking
     $using_arrows = false
     $using_wasd = false
   end
 end
 
-# Adiciona um evento de clique do mouse
 on :mouse_down do |event|
   next if $state != GameState::PLAYING
 

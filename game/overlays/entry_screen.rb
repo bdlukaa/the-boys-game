@@ -3,35 +3,43 @@ require 'ruby2d'
 class EntryScreen
   def initialize
     @sky = Image.new('assets/sky.png', width: Window.width, height: Window.height)
+    setup_title_text
+    setup_subtitle_text
+  end
 
-    @titleText = Text.new(
+  def show
+    @sky.add
+    @title_text.add
+    @subtitle_text.add
+  end
+
+  def remove
+    @sky.remove
+    @title_text.remove
+    @subtitle_text.remove
+  end
+
+  private
+
+  def setup_title_text
+    @title_text = Text.new(
       'The Boys: The Game',
       style: 'bold',
       size: 60,
       color: 'black'
     )
-    @titleText.x = (Window.width - @titleText.width) / 2
-    @titleText.y = (Window.height - @titleText.height) / 2
+    @title_text.x = (Window.width - @title_text.width) / 2
+    @title_text.y = (Window.height - @title_text.height) / 2
+  end
 
-    @subtitleText = Text.new(
+  def setup_subtitle_text
+    @subtitle_text = Text.new(
       'Pressione qualquer tecla para continuar',
       style: 'bold',
       size: 20,
       color: 'black'
     )
-    @subtitleText.x = (Window.width - @subtitleText.width) / 2
-    @subtitleText.y = (Window.height - @titleText.height) / 2 + @titleText.height
-  end
-
-  def show
-    @sky.add
-    @titleText.add
-    @subtitleText.add
-  end
-
-  def remove
-    @sky.remove
-    @titleText.remove
-    @subtitleText.remove
+    @subtitle_text.x = (Window.width - @subtitle_text.width) / 2
+    @subtitle_text.y = (Window.height - @title_text.height) / 2 + @title_text.height
   end
 end

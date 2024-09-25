@@ -1,11 +1,8 @@
 require 'ruby2d'
-
 require_relative '../utils'
 
 class PauseOverlay
-
-  attr_accessor :quit_text
-  attr_accessor :resume_text
+  attr_accessor :quit_text, :resume_text
 
   def initialize
     @background = Rectangle.new(
@@ -15,52 +12,36 @@ class PauseOverlay
       z: 10
     )
 
-    @pause_text = Text.new(
-      'PAUSE',
-      x: (Window.width / 2) - 50, y: (Window.height / 2) - 100,
-      size: 40,
-      color: 'white',
-      z: 20
-    )
-    center_text_h(@pause_text)
-
-    @resume_text = Text.new(
-      'Resume',
-      x: (Window.width / 2) - 50, y: (Window.height / 2) - 30,
-      size: 30,
-      color: 'white',
-      z: 20
-    )
-    center_text_h(@resume_text)
-
-    @quit_text = Text.new(
-      'Quit',
-      x: (Window.width / 2) - 50, y: (Window.height / 2) + 30,
-      size: 30,
-      color: 'white',
-      z: 20
-    )
-    center_text_h(@quit_text)
+    @pause_text = create_text('PAUSE', (Window.height / 2) - 100, 40)
+    @resume_text = create_text('Resume', (Window.height / 2) - 30, 30)
+    @quit_text = create_text('Quit', (Window.height / 2) + 30, 30)
 
     @pause_visible = false
   end
 
   def show
-    @background.add
-    @pause_text.add
-    @resume_text.add
-    @quit_text.add
+    [@background, @pause_text, @resume_text, @quit_text].each(&:add)
     @pause_visible = true
   end
 
   def hide
-    @background.remove
-    @pause_text.remove
-    @resume_text.remove
-    @quit_text.remove
+    [@background, @pause_text, @resume_text, @quit_text].each(&:remove)
     @pause_visible = false
   end
 
+  private
+
+  def create_text(content, y, size)
+    text = Text.new(
+      content,
+      x: (Window.width / 2) - 50, y: y,
+      size: size,
+      color: 'white',
+      z: 20
+    )
+    center_text_h(text)
+    text
+  end
 end
 
 def toggle_pause
@@ -68,12 +49,12 @@ def toggle_pause
   if $state == GameState::PAUSED
     $pause_overlay = PauseOverlay.new
   else
-    $pause_overlay.hide if $pause_overlay
+    $pause_overlay&.hide
   end
 end
 
 on :mouse_down do |event|
-  next if $state != GameState::PAUSED 
+  next if $state != GameState::PAUSED
 
   if $pause_overlay.resume_text.contains?(event.x, event.y)
     toggle_pause
@@ -85,18 +66,11 @@ end
 on :mouse_move do |event|
   next if $state != GameState::PAUSED
 
-  if $pause_overlay.resume_text.contains?(event.x, event.y)
-    $pause_overlay.resume_text.size = 35
-  else
-    $pause_overlay.resume_text.size = 30
-  end
+  update_text_size($pause_overlay.resume_text, event)
+  update_text_size($pause_overlay.quit_text, event)
+end
 
-  if $pause_overlay.quit_text.contains?(event.x, event.y)
-    $pause_overlay.quit_text.size = 35
-  else
-    $pause_overlay.quit_text.size = 30
-  end
-
-  center_text_h($pause_overlay.resume_text)
-  center_text_h($pause_overlay.quit_text)
+def update_text_size(text, event)
+  text.size = text.contains?(event.x, event.y) ? 35 : 30
+  center_text_h(text)
 end
