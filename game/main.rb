@@ -98,7 +98,7 @@ end
 
 on :key_up do |event|
   if %w[left right a d].include?(event.key)
-    $hugie.change_state(:idle) if $hugie.state == :walking
+    $hugie.send(:change_state, :idle) if $hugie.state == :walking
     $using_arrows = false
     $using_wasd = false
   end

@@ -13,7 +13,7 @@ class CompoundV
   end
 
   def fall
-    @y += 2  # Faz o Composto V cair mais lentamente
+    @y += 2
     update_position
   end
 

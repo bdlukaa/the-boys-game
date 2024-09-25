@@ -37,8 +37,6 @@ class SuperHero
     end
   end
 
-  private
-
   def update_position
     @image.x = @x
     @image.y = @y

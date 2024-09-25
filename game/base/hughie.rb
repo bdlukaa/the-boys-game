@@ -77,8 +77,6 @@ class Hughie
     (@x - superhero.x).abs < 50
   end
 
-  private
-
   def load_animations
     @idle_image = load_sprite('assets/hughie_idle.png', 80, 80, 300, true)
     @attack_image = load_sprite('assets/hughie_attack.png', 80, 80, 100, false)
