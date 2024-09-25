@@ -41,7 +41,6 @@ on :key_down do |event|
   if $state == GameState::WAITING
     $entry_screen.remove
     $state = GameState::PLAYING
-    $hugie.show
     start_game
   elsif $state == GameState::PLAYING && event.key == 'escape'
     toggle_pause

@@ -40,7 +40,6 @@ class LoseOverlay
 
     main_texts.each { |text| center_text(text) }
 
-    # Center the subtitle text below the main text
     @subtitle_text.x = (Window.width - @subtitle_text.width) / 2
     @subtitle_text.y = (Window.height + main_texts.first.height) / 2 + 20
   end
