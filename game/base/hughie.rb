@@ -24,16 +24,35 @@ class Hughie
     @image.remove
   end
 
+
+  @flip = :none
   def move_left
     @x = [@x - @speed, 0].max
     change_state(:walking)
+    flip_sprite_horizontally(true)
     update_position
   end
 
   def move_right
     @x = [@x + @speed, Window.width - @image.width].min
     change_state(:walking)
+    flip_sprite_horizontally(false)
     update_position
+  end
+
+  def flip_sprite_horizontally(flip)
+    if flip
+      if flip == :horizontal
+        @image.flip_sprite(nil)
+        @flip = :none
+      else
+        @image.flip_sprite(:horizontal)
+        @flip = :horizontal
+      end
+    else
+      @image.flip_sprite(nil)
+      @flip = :none
+    end
   end
 
   def jump
