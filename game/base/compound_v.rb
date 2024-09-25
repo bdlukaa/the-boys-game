@@ -6,6 +6,7 @@ class CompoundV
     @x = rand(Window.width - @image.width)
     @y = 0
     update_position
+    fall
   end
 
   def remove

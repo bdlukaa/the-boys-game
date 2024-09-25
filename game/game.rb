@@ -26,11 +26,17 @@ def setup_game
 
   $compound_v = nil
   $compound_v_timer = 0
+  $compound_v_effect_timer = 0
+  $compound_v_bar = nil
   $alert_text = nil
   $alert_timer = 0
 
   $start_time = Time.now
   $time_text = Text.new("Tempo: 0s", x: 10, y: 40, size: 20, color: 'white')
+
+  # Initialize the timer for generating Compound V
+  generate_compound_v
+  $compound_v_generate_timer = rand(25..45) * 60 # Convert seconds to frames (assuming 60 FPS)
 end
 
 def clear_game
@@ -42,13 +48,14 @@ def clear_game
   $life_bar_hugie.remove
   $life_bar_superhero.remove
   $compound_v&.remove
+  $compound_v_bar&.remove
   $time_text.remove
   $alert_text&.remove
   $alert_text_outline&.remove
 end
 
 def create_life_bar(x, y, life, color)
-  Rectangle.new(x: x, y: y, width: life * 2, height: 20, color: color)
+  Rectangle.new(x: x, y: y, width: life * 2.5, height: 25, color: color)
 end
 
 def update_game
@@ -59,9 +66,17 @@ def update_game
     $superhero.move_randomly
 
     check_collision
-    generate_compound_v
+    check_compound_v_pickup
+    update_compound_v_effect
     update_alert
     update_time
+
+    # Decrement the timer and generate Compound V if the timer reaches zero
+    $compound_v_generate_timer -= 1
+    if $compound_v_generate_timer <= 0
+      generate_compound_v
+      $compound_v_generate_timer = rand(25..45) * 60 # Reset the timer
+    end
 
     debug_positions
   end
@@ -81,35 +96,6 @@ def handle_game_over
   clear
   $state = GameState::LOSE
   $lose_overlay = LoseOverlay.new
-end
-
-def generate_compound_v
-  if $compound_v.nil? && $compound_v_timer <= 0
-    $compound_v = CompoundV.new
-    $compound_v_timer = rand(1800..3600)
-  end
-
-  if $compound_v
-    $compound_v.fall
-    check_compound_v_pickup
-    $compound_v = nil if $compound_v&.off_screen?
-  end
-
-  $compound_v_timer -= 1 if $compound_v_timer > 0
-end
-
-def check_compound_v_pickup
-  if $hugie.image.contains?($compound_v.x, $compound_v.y)
-    $hugie.velocity_y -= 5
-    $hugie.attack_power = 20
-    $compound_v.remove
-    $compound_v = nil
-    show_compound_v_alert
-  end
-end
-
-def show_compound_v_alert
-  show_alert("HUGHIE PEGOU O COMPOSTO V!", 60 * 3)
 end
 
 def show_alert(message, duration)
@@ -153,4 +139,47 @@ end
 def debug_positions
   puts "Hughie is at #{$hugie.x}, #{$hugie.y}"
   puts "SuperHero position: #{$superhero.x}, #{$superhero.y}"
+end
+
+def generate_compound_v
+  if $compound_v.nil?
+    $compound_v = CompoundV.new
+    $compound_v_timer = rand(1800..3600)
+  end
+
+  if $compound_v
+    $compound_v.fall
+    check_compound_v_pickup
+    $compound_v = nil if $compound_v&.off_screen?
+  end
+
+  $compound_v_timer -= 1 if $compound_v_timer > 0
+end
+
+def check_compound_v_pickup
+  if $compound_v != nil && $hugie.image.contains?($compound_v.x, $compound_v.y)
+    $compound_v.remove
+    $compound_v = nil
+    $compound_v_effect_timer = 900 # 15 seconds at 60 FPS
+    $compound_v_bar = create_life_bar(10, 70, ($compound_v_effect_timer / 60)*2, 'purple')
+    show_compound_v_alert
+  end
+end
+
+def update_compound_v_effect
+  $compound_v.fall if $compound_v
+  if $compound_v_effect_timer > 0
+    $compound_v_effect_timer -= 1
+    $hugie.become_strong
+    $compound_v_bar.width = ($compound_v_effect_timer / 60) * 2
+    if $compound_v_effect_timer == 0
+      $hugie.become_normal
+      $compound_v_bar.remove
+      $compound_v_bar = nil
+    end
+  end
+end
+
+def show_compound_v_alert
+  show_alert("HUGHIE PEGOU O COMPOSTO V!", 60 * 3)
 end

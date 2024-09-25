@@ -32,7 +32,7 @@ class SuperHero
 
   def attack(target)
     if can_attack? && close_to?(target)
-      target.lose_life(@attack_power)
+      target.receive_damage(@attack_power)
       @last_attack_time = Time.now
     end
   end
