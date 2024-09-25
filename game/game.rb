@@ -102,6 +102,7 @@ def check_compound_v_pickup
   if $hugie.image.contains?($compound_v.x, $compound_v.y)
     $hugie.velocity_y -= 5
     $hugie.attack_power = 20
+    $compound_v.remove
     $compound_v = nil
     show_compound_v_alert
   end
@@ -125,6 +126,8 @@ def show_alert(message, duration)
       scale_direction *= -1 if scale_factor >= 1.2 || scale_factor <= 1.0
       $alert_text.size = 30 * scale_factor
       $alert_text_outline.size = 30 * scale_factor
+      $alert_text.x = (Window.width - $alert_text.width) / 2
+      $alert_text_outline.x = (Window.width - $alert_text_outline.width) / 2 - 2
       sleep(0.1)
     end
   end
