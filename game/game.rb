@@ -84,14 +84,31 @@ def check_compound_v_pickup
     $hugie.velocity_y -= 5
     $hugie.attack_power = 20
     $compound_v = nil
-    puts "Hughie pegou o Composto V! Agora ele está mais forte e rápido!"
-    show_alert('HUGIE PEGOU O COMPOSTO V!!!', 60)
+    show_compound_v_alert
   end
 end
 
+def show_compound_v_alert
+  show_alert("HUGHIE PEGOU O COMPOSTO V!", 60 * 3)
+end
+
 def show_alert(message, duration)
-  $alert_text = Text.new(message, x: 100, y: 100, size: 30, color: 'yellow')
+  $alert_text = Text.new(message, x: 100, y: 100, size: 30, color: 'yellow', z: 10)
+  $alert_text_outline = Text.new(message, x: 98, y: 98, size: 30, color: 'black', z: 9)
   $alert_timer = duration
+
+  # Perform this scaling in another thread because while blocks the main game loop
+  Thread.new do
+    scale_factor = 1.0
+    scale_direction = 1
+    while $alert_timer > 0
+      scale_factor += 0.05 * scale_direction
+      scale_direction *= -1 if scale_factor >= 1.2 || scale_factor <= 1.0
+      $alert_text.size = 30 * scale_factor
+      $alert_text_outline.size = 30 * scale_factor
+      sleep(0.1)
+    end
+  end
 end
 
 def update_alert
@@ -99,7 +116,9 @@ def update_alert
     $alert_timer -= 1
     if $alert_timer == 0
       $alert_text.remove
+      $alert_text_outline.remove
       $alert_text = nil
+      $alert_text_outline = nil
     end
   end
 end
