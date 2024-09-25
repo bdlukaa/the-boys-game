@@ -12,6 +12,11 @@ end
 
 def setup_game
   $backgroundImage = Image.new('assets/background/background.png', width: Window.width, height: Window.height)
+  $birds = [
+    Sprite.new('assets/birds/bird1.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true),
+    Sprite.new('assets/birds/bird2.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true),
+    Sprite.new('assets/birds/bird3.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true)
+  ]
   $ground = Ground.new
   $hugie = Hughie.new
   $superhero = SuperHero.new
@@ -26,6 +31,20 @@ def setup_game
 
   $start_time = Time.now
   $time_text = Text.new("Tempo: 0s", x: 10, y: 40, size: 20, color: 'white')
+end
+
+def clear_game
+  $backgroundImage.remove
+  $birds.each(&:remove)
+  $ground.remove
+  $hugie.remove
+  $superhero.remove
+  $life_bar_hugie.remove
+  $life_bar_superhero.remove
+  $compound_v&.remove
+  $time_text.remove
+  $alert_text&.remove
+  $alert_text_outline&.remove
 end
 
 def create_life_bar(x, y, life, color)

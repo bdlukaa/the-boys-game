@@ -28,16 +28,21 @@ class LoseOverlay
   end
 
   def create_texts
-    text = 'VOCÊ PERDEU :/'
+    main_text = 'VOCÊ PERDEU :/'
+    @subtitle_text = Text.new('Pressione qualquer tecla para voltar', size: 30, color: 'white', z: 4)
     @texts = [
-      Text.new(text, size: 100, color: Color.new('#8B0000'), z: 1),
-      Text.new(text, size: 98, color: 'red', z: 2),
-      Text.new(text, size: 96, color: 'orange', z: 3)
+      Text.new(main_text, size: 100, color: Color.new('#8B0000'), z: 1),
     ]
   end
 
   def center_texts
-    @texts.each { |text| center_text(text) }
+    main_texts = @texts[0..2]
+
+    main_texts.each { |text| center_text(text) }
+
+    # Center the subtitle text below the main text
+    @subtitle_text.x = (Window.width - @subtitle_text.width) / 2
+    @subtitle_text.y = (Window.height + main_texts.first.height) / 2 + 20
   end
 
   def create_stars
