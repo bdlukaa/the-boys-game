@@ -70,6 +70,7 @@ def update_game
     update_compound_v_effect
     update_alert
     update_time
+    update_characters_state
 
     # Decrement the timer and generate Compound V if the timer reaches zero
     $compound_v_generate_timer -= 1
@@ -85,10 +86,6 @@ end
 def check_collision
   if $hugie.image.contains?($superhero.x, $superhero.y) && $superhero.can_attack?
     $superhero.attack($hugie)
-    $life_bar_hugie.width = $hugie.life * 2
-    $life_bar_hugie.color = 'red' if $hugie.life <= 20
-    puts "Hughie perdeu vida! Vida restante: #{$hugie.life}"
-    handle_game_over if $hugie.life <= 0
   end
 end
 
@@ -182,4 +179,74 @@ end
 
 def show_compound_v_alert
   show_alert("HUGHIE PEGOU O COMPOSTO V!", 60 * 3)
+end
+
+def update_characters_state
+  if $superhero
+    $life_bar_superhero.width = $superhero.life * 2
+    $life_bar_superhero.color = 'red' if $superhero.life <= 20
+    puts "SuperHero perdeu vida! Vida restante: #{$superhero.life}"
+    if $superhero.life <= 0
+      clear
+      $win_overlay = WinOverlay.new
+      $state = GameState::WIN
+    end
+  end
+
+  if $hugie
+    $life_bar_hugie.width = $hugie.life * 2
+    $life_bar_hugie.color = 'red' if $hugie.life <= 20
+    puts "Hughie perdeu vida! Vida restante: #{$hugie.life}"
+    handle_game_over if $hugie.life <= 0
+  end
+end
+
+$using_wasd = false
+$using_arrows = false
+
+on :key_held do |event|
+  next if $state != GameState::PLAYING
+
+  case event.key
+  when 'left'
+    unless $using_wasd
+      $using_arrows = true
+      $hugie.move_left if $hugie
+    end
+  when 'right'
+    unless $using_wasd
+      $using_arrows = true
+      $hugie.move_right if $hugie
+    end
+  when 'a'
+    unless $using_arrows
+      $using_wasd = true
+      $hugie.move_left if $hugie
+    end
+  when 'd'
+    unless $using_arrows
+      $using_wasd = true
+      $hugie.move_right if $hugie
+    end
+  when 'space'
+    $hugie.jump if $hugie&.on_ground?
+  when 'x'
+    $hugie.attack($superhero) if $hugie&.can_attack?  
+  end
+end
+
+on :key_up do |event|
+  if %w[left right a d].include?(event.key)
+    $hugie.send(:change_state, :idle) if $hugie.state == :walking
+    $using_arrows = false
+    $using_wasd = false
+  end
+end
+
+on :mouse_down do |event|
+  next if $state != GameState::PLAYING
+
+  if event.button == :left
+    $hugie.attack($superhero) if $hugie&.can_attack?
+  end
 end
