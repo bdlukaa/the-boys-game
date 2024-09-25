@@ -2,7 +2,7 @@ require 'ruby2d'
 
 class EntryScreen
   def initialize
-    @sky = Image.new('assets/sky.png', width: Window.width, height: Window.height)
+    @sky = Image.new('assets/background/sky.png', width: Window.width, height: Window.height)
     setup_title_text
     setup_subtitle_text
   end

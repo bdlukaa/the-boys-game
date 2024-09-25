@@ -11,7 +11,7 @@ def start_game
 end
 
 def setup_game
-  $backgroundImage = Image.new('assets/background.png', width: Window.width, height: Window.height)
+  $backgroundImage = Image.new('assets/background/background.png', width: Window.width, height: Window.height)
   $ground = Ground.new
   $hugie = Hughie.new
   $superhero = SuperHero.new

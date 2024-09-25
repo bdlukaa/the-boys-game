@@ -15,15 +15,15 @@ set title: 'The Boys: The Game', background: 'gray', resizable: true, fullscreen
 GROUND_Y = Window.height - 100
 
 $backgrounds = [
-  Image.new('assets/background2.png', width: Window.width, height: Window.height),
-  Image.new('assets/background3.png', width: Window.width, height: Window.height),
-  Image.new('assets/background4.png', width: Window.width, height: Window.height)
+  Image.new('assets/background/background2.png', width: Window.width, height: Window.height),
+  Image.new('assets/background/background3.png', width: Window.width, height: Window.height),
+  Image.new('assets/background/background4.png', width: Window.width, height: Window.height)
 ]
 
 $birds = [
-  Sprite.new('assets/bird1.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true),
-  Sprite.new('assets/bird2.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true),
-  Sprite.new('assets/bird3.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true)
+  Sprite.new('assets/birds/bird1.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true),
+  Sprite.new('assets/birds/bird2.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true),
+  Sprite.new('assets/birds/bird3.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true)
 ]
 
 $hugie = Hughie.new
