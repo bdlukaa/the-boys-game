@@ -78,11 +78,11 @@ class Hughie
   end
 
   def load_animations
-    @idle_image = load_sprite('assets/hughie/hughie_idle.png', 80, 80, 300, true)
-    @attack_image = load_sprite('assets/hughie/hughie_attack.png', 80, 80, 100, false)
-    @jump_image = load_sprite('assets/hughie/hughie_jump.png', 80, 80, 300, true)
-    @hurt_image = load_sprite('assets/hughie/hughie_hurt.png', 80, 80, 300, false)
-    @walk_image = load_sprite('assets/hughie/hughie_walk.png', 80, 80, 200, true)
+    @idle_image = load_sprite('assets/hughie/hughie_idle.png', 160, 160, 300, true)
+    @attack_image = load_sprite('assets/hughie/hughie_attack.png', 160, 160, 100, false)
+    @jump_image = load_sprite('assets/hughie/hughie_jump.png', 160, 160, 300, true)
+    @hurt_image = load_sprite('assets/hughie/hughie_hurt.png', 160, 160, 300, false)
+    @walk_image = load_sprite('assets/hughie/hughie_walk.png', 160, 160, 200, true)
   end
 
   def load_sprite(file, width, height, time, loop)

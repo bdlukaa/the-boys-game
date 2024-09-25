@@ -2,7 +2,7 @@ class SuperHero
   attr_accessor :x, :y, :image, :life, :attack_power, :speed, :last_attack_time, :direction, :direction_timer
 
   def initialize
-    @image = Image.new('assets/superhero.png', width: 80, height: 80)
+    @image = Image.new('assets/superhero.png', width: 160, height: 160)
     @x = rand(Window.width - @image.width)
     @y = GROUND_Y - @image.height
     @life = 100

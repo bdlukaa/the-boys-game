@@ -2,7 +2,7 @@ class CompoundV
   attr_accessor :x, :y, :image
 
   def initialize
-    @image = Image.new('assets/compound_v.png', width: 40, height: 40)
+    @image = Image.new('assets/compound_v.png', width: 80, height: 80)
     @x = rand(Window.width - @image.width)
     @y = 0
     update_position
