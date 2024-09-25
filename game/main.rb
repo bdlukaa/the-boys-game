@@ -22,9 +22,6 @@ $backgrounds = [
   Image.new('assets/background4.png', width: Window.width, height: Window.height)
 ]
 
-# Carrega o céu
-$sky = Image.new('assets/sky.png', width: Window.width, height: Window.height)
-
 # Carrega os pássaros
 $birds = [
   Sprite.new('assets/bird1.png', width: 50, height: 50, clip_width: 50, time: 300, loop: true),

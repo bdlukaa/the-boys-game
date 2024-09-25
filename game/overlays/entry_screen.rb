@@ -2,6 +2,8 @@ require 'ruby2d'
 
 class EntryScreen
   def initialize
+    @sky = Image.new('assets/sky.png', width: Window.width, height: Window.height)
+
     @titleText = Text.new(
       'The Boys: The Game',
       style: 'bold',
@@ -22,11 +24,13 @@ class EntryScreen
   end
 
   def show
+    @sky.add
     @titleText.add
     @subtitleText.add
   end
 
   def remove
+    @sky.remove
     @titleText.remove
     @subtitleText.remove
   end
