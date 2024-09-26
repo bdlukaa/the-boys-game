@@ -5,6 +5,7 @@ class SuperHero
   DEFAULT_ATTACK_POWER = 5
   DEFAULT_HEIGHT = 160
   DEFAULT_WIDTH = 160
+  ATTACK_COOLDOWN = 1 
 
   def initialize
     load_animations
@@ -17,6 +18,7 @@ class SuperHero
   end
 
   def move_randomly
+    return unless @state == :idle || @state == :walking 
     change_direction if @direction_timer <= 0
 
     move
@@ -62,7 +64,7 @@ class SuperHero
   end
 
   def can_attack?
-    Time.now - @last_attack_time > 1
+    Time.now - @last_attack_time > ATTACK_COOLDOWN
   end
 
   def close_to?(target)
@@ -70,16 +72,12 @@ class SuperHero
   end
 
   def load_animations
-    # @idle_image = load_sprite('assets/superhero/superhero_idle.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, true)
-    # @attack_image = load_sprite('assets/superhero/superhero_attack.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 100, false)
-    # @hurt_image = load_sprite('assets/superhero/superhero_hurt.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, false)
-    # @walk_image = load_sprite('assets/superhero/superhero_walk.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 200, true)
-  
-    @idle_image = load_sprite('assets/hughie/hughie_idle.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, true)
-    @attack_image = load_sprite('assets/hughie/hughie_attack.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 100, false)
-    @jump_image = load_sprite('assets/hughie/hughie_jump.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, true)
-    @hurt_image = load_sprite('assets/hughie/hughie_hurt.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, false)
-    @walk_image = load_sprite('assets/hughie/hughie_walk.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 200, true)
+    @animations = {
+      idle: load_sprite('assets/hughie/hughie_idle.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, true),
+      attack: load_sprite('assets/hughie/hughie_attack.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 100, false),
+      hurt: load_sprite('assets/hughie/hughie_hurt.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, false),
+      walk: load_sprite('assets/hughie/hughie_walk.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 200, true)
+    }
   end
 
   def load_sprite(file, width, height, time, loop)
@@ -89,7 +87,7 @@ class SuperHero
   end
 
   def set_initial_state
-    @image = @idle_image
+    @image = @animations[:idle]
     @x = rand(Window.width - @image.width)
     @y = GROUND_Y - @image.height
     @life = 100
@@ -107,24 +105,13 @@ class SuperHero
     @image.remove
     @state = new_state
 
-    @image = case @state
-             when :idle then @idle_image
-             when :attack then @attack_image
-             when :hurt then @hurt_image
-             when :walking then @walk_image
-             end
-
-    @image.x = @x
-    @image.y = @y
+    @image = @animations[@state] || @animations[:idle]
+    update_position
     @image.add
     @image.play { change_state(:idle) } if [:attack, :hurt].include?(@state)
   end
 
   def flip_sprite_horizontally(flip)
-    if flip
-      @image.flip_sprite(:horizontal)
-    else
-      @image.flip_sprite(nil)
-    end
+    flip ? @image.flip_sprite(:horizontal) : @image.flip_sprite(nil)
   end
 end
