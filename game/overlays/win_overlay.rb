@@ -33,7 +33,7 @@ class WinOverlay
 
   def create_texts
     win_text = 'VOCÊ GANHOU!'
-    continue_text = 'Pressione qualquer tecla para continuar'
+    continue_text = 'Pressione ESPAÇO para continuar'
 
     @texts << create_text(win_text, 80, '#8B0000', 1)
     @texts << create_text(win_text, 79, 'red', 2)
@@ -76,5 +76,7 @@ end
 
 on :key_down do |event|
   next if $state != GameState::WIN
-  reset
+  if event.key == 'space'
+    reset
+  end
 end

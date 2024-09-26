@@ -38,6 +38,7 @@ def reset
 end
 
 on :key_down do |event|
+  next if $state == GameState::LOSE || $state == GameState::WIN
   if $state == GameState::WAITING
     $entry_screen.remove
     $state = GameState::PLAYING

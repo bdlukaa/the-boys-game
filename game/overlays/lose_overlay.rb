@@ -59,3 +59,10 @@ class LoseOverlay
     text.y = (Window.height - text.height) / 2
   end
 end
+
+on :key_down do |event|
+  next if $state != GameState::LOSE
+  if event.key == 'space'
+    reset
+  end
+end
