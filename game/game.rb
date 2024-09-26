@@ -174,6 +174,8 @@ def update_compound_v_effect
       $compound_v_bar.remove
       $compound_v_bar = nil
     end
+  else
+    $hugie.become_normal
   end
 end
 
