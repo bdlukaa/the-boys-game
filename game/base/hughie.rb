@@ -3,8 +3,6 @@ class Hughie
 
   DEFAULT_SPEED = 3
   DEFAULT_ATTACK_POWER = 5
-  DEFAULT_HEIGHT = 160
-  DEFAULT_WIDTH = 160
 
   def initialize
     load_animations
@@ -102,11 +100,11 @@ class Hughie
   end
 
   def load_animations
-    @idle_image = load_sprite('assets/hughie/hughie_idle.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, true)
-    @attack_image = load_sprite('assets/hughie/hughie_attack.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 100, false)
-    @jump_image = load_sprite('assets/hughie/hughie_jump.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, true)
-    @hurt_image = load_sprite('assets/hughie/hughie_hurt.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, false)
-    @walk_image = load_sprite('assets/hughie/hughie_walk.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 200, true)
+    @idle_image = load_sprite('assets/hughie/hughie_idle.png', $character_width, $character_height, 300, true)
+    @attack_image = load_sprite('assets/hughie/hughie_attack.png', $character_width, $character_height, 100, false)
+    @jump_image = load_sprite('assets/hughie/hughie_jump.png', $character_width, $character_height, 300, true)
+    @hurt_image = load_sprite('assets/hughie/hughie_hurt.png', $character_width, $character_height, 300, false)
+    @walk_image = load_sprite('assets/hughie/hughie_walk.png', $character_width, $character_height, 200, true)
   end
 
   def load_sprite(file, width, height, time, loop)
@@ -151,15 +149,15 @@ class Hughie
   def become_strong
     @attack_power = DEFAULT_ATTACK_POWER * 2.5
     @speed = DEFAULT_SPEED * 2.5
-    @image.height = DEFAULT_HEIGHT * 1.5
-    @image.width = DEFAULT_WIDTH * 1.5
+    @image.height = $character_height * 1.5
+    @image.width = $character_width * 1.5
   end
 
   def become_normal
     @attack_power = DEFAULT_ATTACK_POWER
     @speed = DEFAULT_SPEED
-    @image.height = DEFAULT_HEIGHT
-    @image.width = DEFAULT_WIDTH
+    @image.height = $character_height
+    @image.width = $character_width
   end
 
   def receive_damage(amount)

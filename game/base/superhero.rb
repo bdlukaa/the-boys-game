@@ -1,10 +1,13 @@
+$character_height = 160 * 2.5
+$character_width = 160 * 2.5
+
 class SuperHero
   attr_accessor :x, :y, :image, :life, :attack_power, :speed, :last_attack_time, :direction, :direction_timer, :state
 
   DEFAULT_SPEED = 8
   DEFAULT_ATTACK_POWER = 10
-  DEFAULT_HEIGHT = 160
-  DEFAULT_WIDTH = 160
+  MAX_SPEED = 20       # Velocidade máxima
+  ACCELERATION = 0.1   # Valor de aceleração
   ATTACK_COOLDOWN = 1
 
   def initialize
@@ -13,15 +16,21 @@ class SuperHero
     update_position
   end
 
+  # Método para aumentar a velocidade até o limite
+  def accelerate
+    @speed = [@speed + ACCELERATION, MAX_SPEED].min
+  end
+
   def remove
     @image.remove
   end
 
   def move_randomly
-    return unless @state == :idle || @state == :walking 
+    return unless @state == :idle || @state == :walking
     change_direction if @direction_timer <= 0 || @x <= 0 || @x >= Window.width - @image.width
 
     move
+    accelerate  # Acelera a cada movimento
     @direction_timer -= 1
     update_position
   end
@@ -73,10 +82,10 @@ class SuperHero
 
   def load_animations
     @animations = {
-      idle: load_sprite('assets/hughie/hughie_idle.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, true),
-      attack: load_sprite('assets/hughie/hughie_attack.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 100, false),
-      hurt: load_sprite('assets/hughie/hughie_hurt.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 300, false),
-      walk: load_sprite('assets/hughie/hughie_walk.png', DEFAULT_WIDTH, DEFAULT_HEIGHT, 200, true)
+      idle: load_sprite('assets/hughie/hughie_idle.png', $character_width, $character_height, 300, true),
+      attack: load_sprite('assets/hughie/hughie_attack.png', $character_width, $character_height, 100, false),
+      hurt: load_sprite('assets/hughie/hughie_hurt.png', $character_width, $character_height, 300, false),
+      walk: load_sprite('assets/hughie/hughie_walk.png', $character_width, $character_height, 200, true)
     }
   end
 
