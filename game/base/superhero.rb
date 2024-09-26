@@ -1,11 +1,11 @@
 class SuperHero
   attr_accessor :x, :y, :image, :life, :attack_power, :speed, :last_attack_time, :direction, :direction_timer, :state
 
-  DEFAULT_SPEED = 3
+  DEFAULT_SPEED = 8
   DEFAULT_ATTACK_POWER = 5
   DEFAULT_HEIGHT = 160
   DEFAULT_WIDTH = 160
-  ATTACK_COOLDOWN = 1 
+  ATTACK_COOLDOWN = 1
 
   def initialize
     load_animations
@@ -19,7 +19,7 @@ class SuperHero
 
   def move_randomly
     return unless @state == :idle || @state == :walking 
-    change_direction if @direction_timer <= 0
+    change_direction if @direction_timer <= 0 || @x <= 0 || @x >= Window.width - @image.width
 
     move
     @direction_timer -= 1
@@ -81,7 +81,7 @@ class SuperHero
   end
 
   def load_sprite(file, width, height, time, loop)
-    sprite = Sprite.new(file, width: width, height: height, time: time, loop: loop, color: 'black')
+    sprite = Sprite.new(file, width: width, height: height, time: time, loop: loop, color: 'blue')
     sprite.remove
     sprite
   end
