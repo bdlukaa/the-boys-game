@@ -1,8 +1,8 @@
 class Hughie
   attr_accessor :x, :y, :image, :velocity_y, :life, :attack_power, :speed, :last_attack_time, :state
 
-  DEFAULT_SPEED = 3
-  DEFAULT_ATTACK_POWER = 5
+  DEFAULT_SPEED = 5
+  DEFAULT_ATTACK_POWER = 8
 
   def initialize
     load_animations
@@ -56,7 +56,7 @@ class Hughie
   def jump
     return unless on_ground?
 
-    @velocity_y = -15
+    @velocity_y = -30
     @on_ground = false
     change_state(:jump)
   end

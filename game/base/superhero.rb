@@ -1,13 +1,13 @@
-$character_height = 160 * 2.5
-$character_width = 160 * 2.5
+$character_height = 160 * 1.75
+$character_width = 160 * 1.75
 
 class SuperHero
   attr_accessor :x, :y, :image, :life, :attack_power, :speed, :last_attack_time, :direction, :direction_timer, :state
 
   DEFAULT_SPEED = 8
-  DEFAULT_ATTACK_POWER = 10
-  MAX_SPEED = 20       # Velocidade máxima
-  ACCELERATION = 0.1   # Valor de aceleração
+  DEFAULT_ATTACK_POWER = 5
+  MAX_SPEED = 30
+  ACCELERATION = 0.1  
   ATTACK_COOLDOWN = 1
 
   def initialize
@@ -16,7 +16,6 @@ class SuperHero
     update_position
   end
 
-  # Método para aumentar a velocidade até o limite
   def accelerate
     @speed = [@speed + ACCELERATION, MAX_SPEED].min
   end
@@ -30,7 +29,7 @@ class SuperHero
     change_direction if @direction_timer <= 0 || @x <= 0 || @x >= Window.width - @image.width
 
     move
-    accelerate  # Acelera a cada movimento
+    accelerate 
     @direction_timer -= 1
     update_position
   end
