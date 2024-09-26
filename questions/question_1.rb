@@ -81,3 +81,7 @@ funcionario3 = Funcionario.new("Marina Carvalho", "Analista", 4500.00)
 funcionario1.exibir_infos
 funcionario2.exibir_infos
 funcionario3.exibir_infos
+
+#utilizando o método setter
+funcionario1.nome = "Clara Silva"
+funcionario1.exibir_infos
