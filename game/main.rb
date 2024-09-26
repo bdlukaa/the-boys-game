@@ -10,7 +10,12 @@ require_relative 'overlays/pause_overlay'
 require_relative 'overlays/win_overlay'
 
 # Window Configuration
-set title: 'The Boys: The Game', background: 'gray', resizable: true, fullscreen: true, width: 1920, height: 1080
+set title: 'The Boys: The Game', 
+    background: 'gray', 
+    resizable: true, 
+    fullscreen: true, 
+    width: 1920, 
+    height: 1080
 
 GROUND_Y = Window.height - 100
 
