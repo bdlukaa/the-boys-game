@@ -2,7 +2,7 @@ class SuperHero
   attr_accessor :x, :y, :image, :life, :attack_power, :speed, :last_attack_time, :direction, :direction_timer, :state
 
   DEFAULT_SPEED = 8
-  DEFAULT_ATTACK_POWER = 5
+  DEFAULT_ATTACK_POWER = 10
   DEFAULT_HEIGHT = 160
   DEFAULT_WIDTH = 160
   ATTACK_COOLDOWN = 1
