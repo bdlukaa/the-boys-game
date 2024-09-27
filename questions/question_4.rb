@@ -7,14 +7,13 @@ Conceitos explorados: Interfaces, implementação de métodos.
 =end
 
 class MeiodePagamento
-    def realizarPagamento()
-      # emite um erro se o método for chamado mas não for implementado
-      raise NotImplementedError, 'Implemente o metódo da classe abstrata'
+    def realizarPagamento
+        # emite um erro se o método for chamado mas não for implementado
+        raise NotImplementedError, 'Implemente o metódo da classe abstrata'
     end
 end
 
 class Boleto < MeiodePagamento
-
     def initialize(score)
         @saldo = score * 0.70
     end
@@ -25,18 +24,17 @@ class Boleto < MeiodePagamento
         if preco <= @saldo
             return "O boleto foi compensado"
         end
-        return "Não foi possível confirmar o pagamento do boleto"
+        "Não foi possível confirmar o pagamento do boleto"
     end
 
     def depositar(valor)
         @saldo += valor
-        return "Depósito realizado com sucesso. Saldo atual: #{@saldo}"
+        "Depósito realizado com sucesso. Saldo atual: #{@saldo}"
     end
 end
 
-#Crie uma classe Cartão que implementa essa interface e define maneiras diferentes de realizar o pagamento. 
+# Crie uma classe Cartão que implementa essa interface e define maneiras diferentes de realizar o pagamento.
 class Cartaocredito < MeiodePagamento
-
     def initialize(score)
         @limite = score * 3.5
     end
@@ -47,17 +45,17 @@ class Cartaocredito < MeiodePagamento
         if preco <= @limite
             return "• O pagamento com cartão foi aprovado"
         end
-        return "• Pagamento negado. Limite insuficiente"
+        "• Pagamento negado. Limite insuficiente"
     end
 
     def aumentar_limite(valor)
         @limite += valor
-        return "• Limite aumentado com sucesso. Limite atual: #{@limite}"
+        "• Limite aumentado com sucesso. Limite atual: #{@limite}"
     end
 end
 
-cartao = Cartaocredito.new 0
-boleto = Boleto.new 0
+cartao = Cartaocredito.new(0)
+boleto = Boleto.new(0)
 
 puts "\nDeseja aumentar o limite do cartão ou depositar no boleto? (cartao/boleto)"
 escolha = gets.chomp

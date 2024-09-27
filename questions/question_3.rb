@@ -15,15 +15,11 @@ exibir suas áreas.
 class Forma
     def calcular_area
         # emite um erro se o método for chamado mas não for implementado
-        raise NotImplementedError, "Este método deve ser implementado por uma subclasse "
+        raise NotImplementedError, "Este método deve ser implementado por uma subclasse"
     end
 end
 
-class Triangulo < Forma
-      
-end
-
-class Retangulo < Forma 
+class Retangulo < Forma
     def initialize(base, altura)
         @base = base
         @altura = altura
@@ -52,5 +48,5 @@ formas = [
 ]
 
 formas.each do |forma|
-  puts "• Área da forma: #{forma.calcular_area}"
+    puts "• Área da forma: #{forma.calcular_area}"
 end

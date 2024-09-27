@@ -5,7 +5,7 @@
 * Subclasses que herdam de Animal e sobrescrevem métodos.
 =end
 
-class Animal   
+class Animal
     attr_accessor :nome, :idade
 
     def initialize(nome, idade)
@@ -13,39 +13,32 @@ class Animal
         @idade = idade
     end
 
-    def emitirSom()
+    def emitirSom
     end
 end
 
 class Cachorro < Animal
-    
     def initialize(nome, idade)
         super(nome, idade)
-    end    
-        
-    def emitirSom()
-        return "auau"
     end
 
+    def emitirSom
+        "auau"
+    end
 end
 
 class Gato < Animal
-
     def initialize(nome, idade)
         super(nome, idade)
     end
-    
-    def emitirSom()
-        return "miau"
-    end
 
+    def emitirSom
+        "miau"
+    end
 end
 
-
-
 robs = Cachorro.new("Pinduca", 9)
-puts " • O #{robs.nome} faz #{robs.emitirSom()}"
-
+puts " • O #{robs.nome} faz #{robs.emitirSom}"
 
 alfredo = Gato.new("Mingau", 3)
-puts " • E o #{alfredo.nome} faz #{alfredo.emitirSom()}"
+puts " • E o #{alfredo.nome} faz #{alfredo.emitirSom}"

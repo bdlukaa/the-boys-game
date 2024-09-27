@@ -20,7 +20,7 @@ class Livro
   end
 
   def exibir_infos
-    puts "Título: #{@titulo}, Autor: #{@autor}, Ano de Publicação: #{@anoDePublicacao}"
+    puts " • Título: #{@titulo}, Autor: #{@autor}, Ano de Publicação: #{@anoDePublicacao}"
   end
 end
 
@@ -55,10 +55,8 @@ class Biblioteca
   end
 end
 
-# Criando a biblioteca
 biblioteca = Biblioteca.new
 
-# Criando livros
 livro1 = Livro.new("A Hora da Estrela", "Clarice Lispector", 1977)
 livro2 = Livro.new("Os sertões", "Euclides da Cunha", 1902)
 livro3 = Livro.new("Dom Quixote", "Miguel de Cervantes", 1605)
