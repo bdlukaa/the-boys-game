@@ -1,11 +1,18 @@
 =begin
 ! 4. Interface com Meio de Pagamento
 Conceitos explorados: Interfaces, implementação de métodos.
+
+Problema: Crie uma interface Pagamento com o método realizar Pagamento(). 
+Crie classes Cartaocredito e Boleto que implementam essa interface e definem 
+maneiras diferentes de realizar o pagamento. No método principal, use objetos 
+dessas dasses e faça com que eles realizem o pagamento.
+
 ! Requisitos:
 * Interface com método abstrato.
 * Classes que implementam a interface de maneira diferente.
 =end
 
+#Problema: Crie uma interface Pagamento com o método realizar Pagamento().
 class MeiodePagamento
     def realizarPagamento
         # emite um erro se o método for chamado mas não for implementado
@@ -13,6 +20,8 @@ class MeiodePagamento
     end
 end
 
+#Crie uma classe Boleto que implementa essa interface e define maneiras
+#diferentes de realizar o pagamento. 
 class Boleto < MeiodePagamento
     def initialize(score)
         @saldo = score * 0.70
@@ -33,7 +42,8 @@ class Boleto < MeiodePagamento
     end
 end
 
-# Crie uma classe Cartão que implementa essa interface e define maneiras diferentes de realizar o pagamento.
+#Crie uma classe Cartão que implementa essa interface e define maneiras
+#diferentes de realizar o pagamento.
 class Cartaocredito < MeiodePagamento
     def initialize(score)
         @limite = score * 3.5
@@ -54,41 +64,16 @@ class Cartaocredito < MeiodePagamento
     end
 end
 
-cartao = Cartaocredito.new(0)
-boleto = Boleto.new(0)
+#No método principal, use objetos dessas dasses e faça com que eles realizem o pagamento.
 
-puts "\nDeseja aumentar o limite do cartão ou depositar no boleto? (cartao/boleto)"
-escolha = gets.chomp
+#cartão
+cartao = Cartaocredito.new 345
+puts "\nCartão:"
+puts cartao.realizarPagamento(5332)
+puts cartao.realizarPagamento(533)
 
-if escolha == 'cartao'
-    puts "Digite o valor para aumentar o limite do cartão:"
-    valor = gets.chomp.to_f
-    puts cartao.aumentar_limite(valor)
-elsif escolha == 'boleto'
-    puts "Digite o valor para depositar no boleto:"
-    valor = gets.chomp.to_f
-    puts boleto.depositar(valor)
-else
-    puts "Opção inválida."
-end
-
-puts "\nDeseja realizar um pagamento? (sim/não)"
-resposta = gets.chomp
-
-if resposta == 'sim'
-    puts "Escolha o meio de pagamento (cartao/boleto):"
-    meio_pagamento = gets.chomp
-
-    puts "Digite o valor do pagamento:"
-    valor_pagamento = gets.chomp.to_f
-
-    if meio_pagamento == 'cartao'
-        puts cartao.realizarPagamento(valor_pagamento)
-    elsif meio_pagamento == 'boleto'
-        puts boleto.realizarPagamento(valor_pagamento)
-    else
-        puts "Meio de pagamento inválido."
-    end
-else
-    puts "Operação finalizada."
-end
+#boleto
+boleto = Boleto.new 765
+puts "\nBoleto:"
+puts boleto.realizarPagamento(999.99)
+puts boleto.realizarPagamento(534)
