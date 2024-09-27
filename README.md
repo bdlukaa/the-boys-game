@@ -30,6 +30,8 @@ Parte teórica de POO.
   - [x] Controles de Fluxo;
   - [x] Funções; e
   - [x] Modularidade.
+     
+Slides: https://www.canva.com/design/DAGRm_cAg7Q/Szut4s5tFpCsLdXTHOd3VA/edit?utm_content=DAGRm_cAg7Q&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 ### Requisito 2
 
