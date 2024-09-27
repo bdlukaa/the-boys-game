@@ -1,8 +1,6 @@
 =begin
 ! 4. Interface com Meio de Pagamento
 Conceitos explorados: Interfaces, implementação de métodos.
-
-
 ! Requisitos:
 * Interface com método abstrato.
 * Classes que implementam a interface de maneira diferente.
@@ -14,13 +12,6 @@ class MeiodePagamento
       raise NotImplementedError, 'Implemente o metódo da classe abstrata'
     end
 end
-
-
-#contexto
-
-
-
-
 
 #Crie uma classe Boleto que implementa essa interface e define maneiras diferentes de realizar o pagamento. 
 class Boleto < MeiodePagamento
@@ -52,7 +43,6 @@ class Cartaocredito < MeiodePagamento
         return "Pagamento negado. Limite insuficiente"
     end
 end
-
 
 
 #No método principal, use objetos dessas dasses e faça com que eles realizem o pagamento.
