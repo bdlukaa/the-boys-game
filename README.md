@@ -19,27 +19,27 @@ Projeto universitário para a disciplina de Paradigmas e Linguagens de Programa�
 
 Parte teórica de POO.
 
-- [ ] Conceito;
-- [ ] Herança;
-- [ ] Vinculação Dinâmica;
-- [ ] Polimorfismo;
-- [ ] Ruby:
-  - [ ] Sintaxe;
-  - [ ] Semântica;
-  - [ ] Tipos de Dados;
-  - [ ] Controles de Fluxo;
-  - [ ] Funções; e
-  - [ ] Modularidade.
+- [x] Conceito;
+- [x] Herança;
+- [x] Vinculação Dinâmica;
+- [x] Polimorfismo;
+- [x] Ruby:
+  - [x] Sintaxe;
+  - [x] Semântica;
+  - [x] Tipos de Dados;
+  - [x] Controles de Fluxo;
+  - [x] Funções; e
+  - [x] Modularidade.
 
 ### Requisito 2
 
 Parte prática de POO.
 
-- [ ] [Questão 1](questions/question_1.rb)
-- [ ] [Questão 2](questions/question_2.rb)
-- [ ] [Questão 3](questions/question_3.rb)
-- [ ] [Questão 4](questions/question_4.rb)
-- [ ] [Questão 5](questions/question_5.rb)
+- [x] [Questão 1](questions/question_1.rb)
+- [x] [Questão 2](questions/question_2.rb)
+- [x] [Questão 3](questions/question_3.rb)
+- [x] [Questão 4](questions/question_4.rb)
+- [x] [Questão 5](questions/question_5.rb)
 
 ### Requisito 3
 
@@ -63,7 +63,7 @@ gem install ruby2d
 E rode o jogo:
 
 ```bash
-ruby game/the_boys.rb
+ruby game/main.rb
 ```
 
 ## Contributors
