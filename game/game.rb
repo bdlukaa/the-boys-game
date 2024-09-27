@@ -158,7 +158,7 @@ def check_compound_v_pickup
     $compound_v.remove
     $compound_v = nil
     $compound_v_effect_timer = 900 # 15 seconds at 60 FPS
-    $compound_v_bar = create_life_bar(10, 70, ($compound_v_effect_timer / 60)*2, 'purple')
+    $compound_v_bar = create_life_bar(10, 70, ($compound_v_effect_timer / 60) * 2, 'purple')
     show_compound_v_alert
   end
 end
@@ -233,7 +233,7 @@ on :key_held do |event|
   when 'space'
     $hugie.jump if $hugie&.on_ground?
   when 'x'
-    $hugie.attack($superhero) if $hugie&.can_attack?  
+    $hugie.attack($superhero) if $hugie&.can_attack?
   end
 end
 

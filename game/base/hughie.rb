@@ -22,8 +22,8 @@ class Hughie
     @image.remove
   end
 
-
   @flip = :none
+
   def move_left
     @x = [@x - @speed, 0].max
     change_state(:walking)
@@ -161,9 +161,7 @@ class Hughie
   end
 
   def receive_damage(amount)
-    if @attack_power > DEFAULT_ATTACK_POWER
-      amount /= 2
-    end
+    amount /= 2 if @attack_power > DEFAULT_ATTACK_POWER
     lose_life(amount)
   end
 end

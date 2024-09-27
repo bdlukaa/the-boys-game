@@ -31,7 +31,7 @@ class LoseOverlay
     main_text = 'VOCÊ PERDEU :/'
     @subtitle_text = Text.new('Pressione qualquer tecla para voltar', size: 30, color: 'white', z: 4)
     @texts = [
-      Text.new(main_text, size: 100, color: Color.new('#8B0000'), z: 1),
+      Text.new(main_text, size: 100, color: Color.new('#8B0000'), z: 1)
     ]
   end
 
@@ -62,7 +62,5 @@ end
 
 on :key_down do |event|
   next if $state != GameState::LOSE
-  if event.key == 'space'
-    reset
-  end
+  reset if event.key == 'space'
 end
