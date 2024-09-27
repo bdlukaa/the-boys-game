@@ -12,16 +12,17 @@ exibir suas áreas.
 * Polimorfismo no uso dos objetos.
 =end
 
-#classe abstrata
 class Forma
     def calcular_area
-        #levanta-se uma exceção, qualquer classe que herdar de Forma precisa 
-        #sobrescrever esse método
+        # emite um erro se o método for chamado mas não for implementado
         raise NotImplementedError, "Este método deve ser implementado por uma subclasse "
     end
 end
 
-#subclasse Retangulo herda de Forma e implementa o método calcular_area
+class Triangulo < Forma
+      
+end
+
 class Retangulo < Forma 
     def initialize(base, altura)
         @base = base
@@ -29,6 +30,7 @@ class Retangulo < Forma
     end
 
     def calcular_area
+        # A = b * h
         @base * @altura
     end
 end
@@ -39,18 +41,16 @@ class Circulo < Forma
     end
 
     def calcular_area
+        # A = π * r²
         3.1416 * (@raio ** 2)
     end
 end
 
-#criando instancias
 formas = [
     Retangulo.new(4, 8),
     Circulo.new(6)
 ]
 
-#método calcular_area é chamado de forma polimórfica para cada obj em formas
-#ruby sabe chamar o método correto
 formas.each do |forma|
-  puts "Área da forma: #{forma.calcular_area}"
+  puts "• Área da forma: #{forma.calcular_area}"
 end
