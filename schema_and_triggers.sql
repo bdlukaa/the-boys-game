@@ -1,4 +1,3 @@
--- create
 CREATE DATABASE heroes;
 
 CREATE TABLE heroes (
