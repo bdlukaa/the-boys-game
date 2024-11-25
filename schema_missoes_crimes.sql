@@ -1,4 +1,4 @@
-CREATE TABLE tipos_crimes (
+CREATE TABLE crime (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL UNIQUE
 );
@@ -20,7 +20,6 @@ CREATE TABLE missoes (
     descricao TEXT,
     dificuldade SMALLINT NOT NULL CHECK (dificuldade BETWEEN 1 AND 10),
     resultado VARCHAR(10) NOT NULL CHECK (resultado IN ('Sucesso', 'Fracasso')),
-    recompensa VARCHAR(50) NOT NULL
 );
 CREATE TABLE missoes_herois (
     id SERIAL PRIMARY KEY,
