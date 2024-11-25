@@ -1,22 +1,64 @@
 import flet as ft
 
-
 def main(page: ft.Page):
     page.title = "Simulador de Batalhas"
-    page.theme_mode = ft.ThemeMode.DARK  # Definindo o tema escuro
+    page.theme_mode = ft.ThemeMode.DARK
     page.padding = 50
-    page.window_height = 700
-    page.window_width = 1000
+    page.window.height = 700
+    page.window.width = 1000
 
     def exibir_snackbar(mensagem, tipo="info"):
-        page.snack_bar = ft.SnackBar(
+        snack_bar = ft.SnackBar(
             ft.Text(mensagem),
             bgcolor=ft.colors.BLUE_GREY if tipo == "info" else ft.colors.RED,
         )
-        page.snack_bar.open = True
+        page.overlay.append(snack_bar)
+        snack_bar.open = True
         page.update()
 
-    def rota_view(route):
+    def navigation_rail():
+        return ft.NavigationRail(
+            selected_index=0,
+            expand_loose=True,
+            label_type=ft.NavigationRailLabelType.ALL,
+            destinations=[
+                ft.NavigationRailDestination(
+                    icon=ft.icons.HOME_OUTLINED,
+                    selected_icon=ft.icons.HOME,
+                    label="Home",
+                ),
+                ft.NavigationRailDestination(
+                    icon=ft.icons.PERSON_OUTLINED,
+                    selected_icon=ft.icons.PERSON,
+                    label="Heróis",
+                ),
+                ft.NavigationRailDestination(
+                    icon=ft.icons.WARNING_OUTLINED,
+                    selected_icon=ft.icons.WARNING,
+                    label="Crimes",
+                ),
+                ft.NavigationRailDestination(
+                    icon=ft.icons.SPORTS_MMA,
+                    selected_icon=ft.icons.SPORTS_MMA,
+                    label="Batalhas",
+                ),
+            ],
+            on_change=lambda e: change_content(
+                page.navigation_rail.destinations[e.control.selected_index].label
+            ),
+        )
+
+    page.navigation_rail = navigation_rail()
+
+    def change_content(route):
+        route = route.lower()
+        rotas = {
+            "home": home_view,
+            "heróis": herois_view,
+            "crimes": crimes_view,
+            "batalhas": batalhas_view,
+        }
+        content_function = rotas.get(route, home_view)
         page.views.clear()
         page.views.append(
             ft.View(
@@ -26,162 +68,97 @@ def main(page: ft.Page):
                         title=ft.Text("Simulador de Batalhas"),
                         bgcolor=ft.colors.SURFACE_VARIANT,
                     ),
-                    ft.NavigationRail(
-                        selected_index=(
-                            0
-                            if route == "/"
-                            else (
-                                1
-                                if route == "/herois"
-                                else 2 if route == "/crimes" else 3
-                            )
-                        ),
-                        label_type=ft.NavigationRailLabelType.ALL,
-                        destinations=[
-                            ft.NavigationRailDestination(
-                                icon=ft.icons.HOME_OUTLINED,
-                                selected_icon=ft.icons.HOME,
-                                label="Home",
-                            ),
-                            ft.NavigationRailDestination(
-                                icon=ft.icons.PERSON_OUTLINED,
-                                selected_icon=ft.icons.PERSON,
-                                label="Heróis",
-                            ),
-                            ft.NavigationRailDestination(
-                                icon=ft.icons.WARNING_OUTLINED,
-                                selected_icon=ft.icons.WARNING,
-                                label="Crimes",
-                            ),
-                            ft.NavigationRailDestination(
-                                icon=ft.icons.FIGHT_OUTLINED,
-                                selected_icon=ft.icons.FIGHT,
-                                label="Batalhas",
-                            ),
+                    ft.Row(
+                        [
+                            page.navigation_rail,
+                            ft.VerticalDivider(width=1),
+                            content_function(),
                         ],
-                        on_change=lambda e: page.go(
-                            page.navigation_rail.destinations[
-                                e.control.selected_index
-                            ].route
-                        ),
+                        expand=True,
                     ),
-                    ft.VerticalDivider(width=1),
-                    view_conteudo(route),
                 ],
             )
         )
         page.update()
 
-    def view_conteudo(route):
-        if route == "/":
-            return ft.Container(
-                ft.Column(
-                    [
-                        ft.Text(
-                            "Bem-vindo ao Simulador de Batalhas!",
-                            style="headlineMedium",
-                        ),
-                        ft.ElevatedButton(
-                            "Iniciar Simulador",
-                            on_click=lambda _: exibir_snackbar("Simulador iniciado!"),
-                        ),
-                    ],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                ),
-                alignment=ft.alignment.center,
-            )
-        elif route == "/herois":
-            return ft.Container(
-                ft.Column(
-                    [
-                        ft.Text("Gerenciar Heróis", style="headlineSmall"),
-                        ft.ElevatedButton(
-                            "Criar Herói",
-                            on_click=lambda _: exibir_snackbar("Herói criado!"),
-                        ),
-                        ft.ElevatedButton(
-                            "Editar Herói",
-                            on_click=lambda _: exibir_snackbar("Herói editado!"),
-                        ),
-                        ft.ElevatedButton(
-                            "Consultar Herói",
-                            on_click=lambda _: exibir_snackbar("Herói consultado!"),
-                        ),
-                    ],
-                ),
-            )
-        elif route == "/crimes":
-            return ft.Container(
-                ft.Column(
-                    [
-                        ft.Text("Gerenciar Crimes", style="headlineSmall"),
-                        ft.ElevatedButton(
-                            "Criar Crime",
-                            on_click=lambda _: exibir_snackbar("Crime criado!"),
-                        ),
-                        ft.ElevatedButton(
-                            "Editar Crime",
-                            on_click=lambda _: exibir_snackbar("Crime editado!"),
-                        ),
-                        ft.ElevatedButton(
-                            "Consultar Crime",
-                            on_click=lambda _: exibir_snackbar("Crime consultado!"),
-                        ),
-                    ],
-                ),
-            )
-        elif route == "/batalhas":
-            return ft.Container(
-                ft.Column(
-                    [
-                        ft.Text("Simulador de Batalhas", style="headlineSmall"),
-                        ft.ElevatedButton(
-                            "Iniciar Simulação",
-                            on_click=lambda _: exibir_snackbar("Simulação iniciada!"),
-                        ),
-                    ],
-                ),
-            )
-
-    page.navigation_rail = ft.NavigationRail(
-        selected_index=0,
-        label_type=ft.NavigationRailLabelType.ALL,
-        destinations=[
-            ft.NavigationRailDestination(
-                icon=ft.icons.HOME_OUTLINED, selected_icon=ft.icons.HOME, label="Home"
+    def home_view():
+        return ft.Container(
+            ft.Column(
+                [
+                    ft.Text(
+                        "Bem-vindo ao Simulador de Batalhas!",
+                        theme_style="headlineMedium",
+                    ),
+                    ft.ElevatedButton(
+                        "Iniciar Simulador",
+                        on_click=lambda _: exibir_snackbar("Simulador iniciado!"),
+                    ),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             ),
-            ft.NavigationRailDestination(
-                icon=ft.icons.PERSON_OUTLINED,
-                selected_icon=ft.icons.PERSON,
-                label="Heróis",
-            ),
-            ft.NavigationRailDestination(
-                icon=ft.icons.WARNING_OUTLINED,
-                selected_icon=ft.icons.WARNING,
-                label="Crimes",
-            ),
-            ft.NavigationRailDestination(
-                icon=ft.icons.FIGHT_OUTLINED,
-                selected_icon=ft.icons.FIGHT,
-                label="Batalhas",
-            ),
-        ],
-        on_change=lambda e: rota_view(
-            page.navigation_rail.destinations[e.control.selected_index].label
-        ),  # usa o label para identificar a rota
-    )
-
-    page.add(
-        ft.Row(
-            [
-                page.navigation_rail,
-                ft.VerticalDivider(width=1),
-                view_conteudo("/"),
-            ],
+            alignment=ft.alignment.center,
             expand=True,
         )
-    )
 
+    def herois_view():
+        return ft.Container(
+            ft.Column(
+                [
+                    ft.Text("Gerenciar Heróis", theme_style="headlineSmall"),
+                    ft.ElevatedButton(
+                        "Criar Herói",
+                        on_click=lambda _: exibir_snackbar("Herói criado!"),
+                    ),
+                    ft.ElevatedButton(
+                        "Editar Herói",
+                        on_click=lambda _: exibir_snackbar("Herói editado!"),
+                    ),
+                    ft.ElevatedButton(
+                        "Consultar Herói",
+                        on_click=lambda _: exibir_snackbar("Herói consultado!"),
+                    ),
+                ],
+            ),
+            expand=True,
+        )
 
-ft.app(target=main)
+    def crimes_view():
+        return ft.Container(
+            ft.Column(
+                [
+                    ft.Text("Gerenciar Crimes", theme_style="headlineSmall"),
+                    ft.ElevatedButton(
+                        "Criar Crime",
+                        on_click=lambda _: exibir_snackbar("Crime criado!"),
+                    ),
+                    ft.ElevatedButton(
+                        "Editar Crime",
+                        on_click=lambda _: exibir_snackbar("Crime editado!"),
+                    ),
+                    ft.ElevatedButton(
+                        "Consultar Crime",
+                        on_click=lambda _: exibir_snackbar("Crime consultado!"),
+                    ),
+                ],
+            ),
+            expand=True,
+        )
+
+    def batalhas_view():
+        return ft.Container(
+            ft.Column(
+                [
+                    ft.Text("Simulador de Batalhas", theme_style="headlineSmall"),
+                    ft.ElevatedButton(
+                        "Iniciar Simulação",
+                        on_click=lambda _: exibir_snackbar("Simulação iniciada!"),
+                    ),
+                ],
+            ),
+            expand=True,
+        )
+
+    change_content("home")
+
+ft.app(target=main) 
