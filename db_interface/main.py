@@ -153,7 +153,6 @@ def main(page: ft.Page):
             ft.DataColumn(ft.Text("Força")),
             ft.DataColumn(ft.Text("Popularidade")),
             ft.DataColumn(ft.Text("Status")),
-            ft.DataColumn(ft.Text("")),
         ]
 
         linhas = []
@@ -172,13 +171,6 @@ def main(page: ft.Page):
                         ft.DataCell(ft.Text(heroi["strength_level"])),
                         ft.DataCell(ft.Text(heroi["popularity"])),
                         ft.DataCell(ft.Text(heroi["status"])),
-                        ft.DataCell(
-                            ft.IconButton(
-                                icon=ft.icons.EDIT,
-                                on_click=lambda _: exibir_snackbar("Herói editado!"),
-                                tooltip="Editar Herói",
-                            ),
-                        ),
                     ]
                 )
             )
@@ -189,7 +181,9 @@ def main(page: ft.Page):
                     ft.Row(
                         [
                             ft.Text("Gerenciar Heróis", theme_style="headlineSmall"),
-                            ft.Text(f"{len(herois)}", theme_style="bodySmall", expand=True),
+                            ft.Text(
+                                f"{len(herois)}", theme_style="bodySmall", expand=True
+                            ),
                             ft.IconButton(
                                 icon=ft.icons.ADD,
                                 on_click=lambda _: criar_heroi(),
@@ -214,21 +208,82 @@ def main(page: ft.Page):
         )
 
     def crimes_view():
+        def criar_crime():
+            # Lógica para criar um crime (placeholder por enquanto)
+            exibir_snackbar("Crime criado!")
+
+        def atualizar_crime():
+            # Lógica para atualizar um crime (placeholder por enquanto)
+            exibir_snackbar("Crime atualizado!")
+
+        crimes = [
+            {
+                "nome": "Roubo a banco",
+                "descricao": "Roubo a banco central de Gotham City.",
+                "data": "2024-11-20",
+                "heroi_responsavel": "Batman",
+                "severidade": 8,
+            },
+            {
+                "nome": "Sequestro",
+                "descricao": "Sequestro da filha do prefeito.",
+                "data": "2024-11-18",
+                "heroi_responsavel": "Mulher Maravilha",
+                "severidade": 9,
+            },
+            # Adicione mais crimes aqui
+        ]
+
+        colunas = [
+            ft.DataColumn(ft.Text("Nome")),
+            ft.DataColumn(ft.Text("Descrição")),
+            ft.DataColumn(ft.Text("Data")),
+            ft.DataColumn(ft.Text("Herói Responsável")),
+            ft.DataColumn(ft.Text("Severidade")),
+        ]
+
+        linhas = []
+        for crime in crimes:
+            linhas.append(
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(crime["nome"])),
+                        ft.DataCell(ft.Text(crime["descricao"])),
+                        ft.DataCell(ft.Text(crime["data"])),
+                        ft.DataCell(ft.Text(crime["heroi_responsavel"])),
+                        ft.DataCell(ft.Text(crime["severidade"])),
+                    ]
+                )
+            )
+
         return ft.Container(
             ft.Column(
                 [
-                    ft.Text("Gerenciar Crimes", theme_style="headlineSmall"),
-                    ft.ElevatedButton(
-                        "Criar Crime",
-                        on_click=lambda _: exibir_snackbar("Crime criado!"),
+                    ft.Row(
+                        [
+                            ft.Text("Gerenciar Crimes", theme_style="headlineSmall"),
+                            ft.Text(
+                                f"{len(crimes)} crimes",
+                                theme_style="bodySmall",
+                                expand=True,
+                            ),
+                            ft.IconButton(
+                                icon=ft.icons.ADD,
+                                on_click=lambda _: criar_crime(),
+                                tooltip="Criar Crime",
+                            ),
+                            ft.IconButton(
+                                icon=ft.icons.REFRESH,
+                                on_click=lambda _: atualizar_crime(),
+                                tooltip="Atualizar Crimes",
+                            ),
+                        ],
+                        alignment=ft.MainAxisAlignment.START,
                     ),
-                    ft.ElevatedButton(
-                        "Editar Crime",
-                        on_click=lambda _: exibir_snackbar("Crime editado!"),
-                    ),
-                    ft.ElevatedButton(
-                        "Consultar Crime",
-                        on_click=lambda _: exibir_snackbar("Crime consultado!"),
+                    ft.DataTable(
+                        columns=colunas,
+                        rows=linhas,
+                        column_spacing=40,
                     ),
                 ],
             ),
