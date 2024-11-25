@@ -159,6 +159,7 @@ def main(page: ft.Page):
             ft.DataColumn(ft.Text("Força")),
             ft.DataColumn(ft.Text("Popularidade")),
             ft.DataColumn(ft.Text("Status")),
+            ft.DataColumn(ft.Text("")),  # Coluna vazia para ações
         ]
 
         linhas = []
@@ -177,6 +178,16 @@ def main(page: ft.Page):
                         ft.DataCell(ft.Text(heroi["strength_level"])),
                         ft.DataCell(ft.Text(heroi["popularity"])),
                         ft.DataCell(ft.Text(heroi["status"])),
+                        ft.DataCell(
+                            ft.IconButton(
+                                icon=ft.icons.EDIT,
+                                tooltip="Editar Herói",
+                                # Adicione a lógica para editar o herói aqui (ex: abrir um modal)
+                                on_click=lambda e: exibir_snackbar(
+                                    f"Editar Herói {heroi['id']}"
+                                ),
+                            )
+                        ),
                     ]
                 )
             )
@@ -246,6 +257,7 @@ def main(page: ft.Page):
             ft.DataColumn(ft.Text("Data")),
             ft.DataColumn(ft.Text("Herói Responsável")),
             ft.DataColumn(ft.Text("Severidade")),
+            ft.DataColumn(ft.Text("")),  # Coluna vazia para ações
         ]
 
         linhas = []
@@ -258,6 +270,16 @@ def main(page: ft.Page):
                         ft.DataCell(ft.Text(crime["data"])),
                         ft.DataCell(ft.Text(crime["heroi_responsavel"])),
                         ft.DataCell(ft.Text(crime["severidade"])),
+                        ft.DataCell(
+                            ft.IconButton(
+                                icon=ft.icons.EDIT,
+                                tooltip="Editar Crime",
+                                # Adicione a lógica para editar o crime aqui (ex: abrir um modal)
+                                on_click=lambda e: exibir_snackbar(
+                                    f"Editar Crime {crime['nome']}"
+                                ),
+                            )
+                        ),
                     ]
                 )
             )
@@ -312,9 +334,11 @@ def main(page: ft.Page):
 
     def missoes_view():
         def criar_missao():
+            # Lógica para criar uma missão (placeholder por enquanto)
             exibir_snackbar("Missão criada!")
 
         def atualizar_missao():
+            # Lógica para atualizar uma missão (placeholder por enquanto)
             exibir_snackbar("Missão atualizada!")
 
         missoes = [
@@ -334,6 +358,7 @@ def main(page: ft.Page):
                 "resultado": "Fracasso",
                 "recompensa": "Popularidade - 10",
             },
+            # Adicione mais missões aqui
         ]
 
         colunas = [
@@ -343,6 +368,7 @@ def main(page: ft.Page):
             ft.DataColumn(ft.Text("Heróis Designados")),
             ft.DataColumn(ft.Text("Resultado")),
             ft.DataColumn(ft.Text("Recompensa")),
+            ft.DataColumn(ft.Text("")),  # Coluna vazia para ações
         ]
 
         linhas = []
@@ -356,6 +382,16 @@ def main(page: ft.Page):
                         ft.DataCell(ft.Text(", ".join(missao["herois_designados"]))),
                         ft.DataCell(ft.Text(missao["resultado"])),
                         ft.DataCell(ft.Text(missao["recompensa"])),
+                        ft.DataCell(
+                            ft.IconButton(
+                                icon=ft.icons.EDIT,
+                                tooltip="Editar Missão",
+                                # Adicione a lógica para editar a missão aqui (ex: abrir um modal)
+                                on_click=lambda e: exibir_snackbar(
+                                    f"Editar Missão {missao['nome']}"
+                                ),
+                            )
+                        ),
                     ]
                 )
             )
