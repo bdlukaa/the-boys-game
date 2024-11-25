@@ -45,6 +45,11 @@ def main(page: ft.Page):
                     selected_icon=ft.icons.SPORTS_MMA,
                     label="Batalhas",
                 ),
+                ft.NavigationRailDestination(
+                    icon=ft.icons.TASK_OUTLINED,
+                    selected_icon=ft.icons.TASK,
+                    label="Missões",
+                ),
             ],
             on_change=lambda e: change_content(
                 page.navigation_rail.destinations[e.control.selected_index].label
@@ -60,6 +65,7 @@ def main(page: ft.Page):
             "heróis": herois_view,
             "crimes": crimes_view,
             "batalhas": batalhas_view,
+            "missões": missoes_view,
         }
         content_function = rotas.get(route, home_view)
         page.views.clear()
@@ -298,6 +304,90 @@ def main(page: ft.Page):
                     ft.ElevatedButton(
                         "Iniciar Simulação",
                         on_click=lambda _: exibir_snackbar("Simulação iniciada!"),
+                    ),
+                ],
+            ),
+            expand=True,
+        )
+
+    def missoes_view():
+        def criar_missao():
+            exibir_snackbar("Missão criada!")
+
+        def atualizar_missao():
+            exibir_snackbar("Missão atualizada!")
+
+        missoes = [
+            {
+                "nome": "Salvar o mundo",
+                "descricao": "Impedir o meteoro de colidir com a Terra.",
+                "dificuldade": 10,
+                "herois_designados": ["Batman", "Mulher Maravilha"],
+                "resultado": "Sucesso",
+                "recompensa": "Força + 5",
+            },
+            {
+                "nome": "Resgatar reféns",
+                "descricao": "Libertar os reféns do banco central.",
+                "dificuldade": 7,
+                "herois_designados": ["Batman"],
+                "resultado": "Fracasso",
+                "recompensa": "Popularidade - 10",
+            },
+        ]
+
+        colunas = [
+            ft.DataColumn(ft.Text("Nome")),
+            ft.DataColumn(ft.Text("Descrição")),
+            ft.DataColumn(ft.Text("Dificuldade")),
+            ft.DataColumn(ft.Text("Heróis Designados")),
+            ft.DataColumn(ft.Text("Resultado")),
+            ft.DataColumn(ft.Text("Recompensa")),
+        ]
+
+        linhas = []
+        for missao in missoes:
+            linhas.append(
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(missao["nome"])),
+                        ft.DataCell(ft.Text(missao["descricao"])),
+                        ft.DataCell(ft.Text(missao["dificuldade"])),
+                        ft.DataCell(ft.Text(", ".join(missao["herois_designados"]))),
+                        ft.DataCell(ft.Text(missao["resultado"])),
+                        ft.DataCell(ft.Text(missao["recompensa"])),
+                    ]
+                )
+            )
+
+        return ft.Container(
+            ft.Column(
+                [
+                    ft.Row(
+                        [
+                            ft.Text("Gerenciar Missões", theme_style="headlineSmall"),
+                            ft.Text(
+                                f"{len(missoes)} missões",
+                                theme_style="bodySmall",
+                                expand=True,
+                            ),
+                            ft.IconButton(
+                                icon=ft.icons.ADD,
+                                on_click=lambda _: criar_missao(),
+                                tooltip="Criar Missão",
+                            ),
+                            ft.IconButton(
+                                icon=ft.icons.REFRESH,
+                                on_click=lambda _: atualizar_missao(),
+                                tooltip="Atualizar Missões",
+                            ),
+                        ],
+                        alignment=ft.MainAxisAlignment.START,
+                    ),
+                    ft.DataTable(
+                        columns=colunas,
+                        rows=linhas,
+                        column_spacing=40,
                     ),
                 ],
             ),
