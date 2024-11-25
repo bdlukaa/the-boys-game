@@ -1,5 +1,6 @@
 import flet as ft
 
+
 def main(page: ft.Page):
     page.title = "Simulador de Batalhas"
     page.theme_mode = ft.ThemeMode.DARK
@@ -9,8 +10,10 @@ def main(page: ft.Page):
 
     def exibir_snackbar(mensagem, tipo="info"):
         snack_bar = ft.SnackBar(
-            ft.Text(mensagem),
+            ft.Text(mensagem, text_align=ft.TextAlign.CENTER),
             bgcolor=ft.colors.BLUE_GREY if tipo == "info" else ft.colors.RED,
+            width=300,
+            behavior=ft.SnackBarBehavior.FLOATING,
         )
         page.overlay.append(snack_bar)
         snack_bar.open = True
@@ -65,8 +68,9 @@ def main(page: ft.Page):
                 "/",
                 [
                     ft.AppBar(
-                        title=ft.Text("Simulador de Batalhas"),
-                        bgcolor=ft.colors.SURFACE_VARIANT,
+                        title=ft.Text("The Boys"),
+                        bgcolor=ft.colors.TRANSPARENT,
+                        center_title=True,
                     ),
                     ft.Row(
                         [
@@ -102,21 +106,107 @@ def main(page: ft.Page):
         )
 
     def herois_view():
+        def criar_heroi():
+            exibir_snackbar("Herói criado!")
+
+        def atualizar_heroi():
+            exibir_snackbar("Herói atualizado!")
+
+        herois = [
+            {
+                "id": 1,
+                "real_name": "Bruce Wayne",
+                "hero_name": "Batman",
+                "gender": "Masculino",
+                "height": 1.88,
+                "weight": 95,
+                "birth_date": "1939-05-19",
+                "birth_place": "Gotham City",
+                "strength_level": 85,
+                "popularity": 90,
+                "status": "Ativo",
+            },
+            {
+                "id": 2,
+                "real_name": "Diana Prince",
+                "hero_name": "Mulher Maravilha",
+                "gender": "Feminino",
+                "height": 1.80,
+                "weight": 75,
+                "birth_date": "1941-10-21",
+                "birth_place": "Themyscira",
+                "strength_level": 95,
+                "popularity": 80,
+                "status": "Ativo",
+            },
+        ]
+
+        colunas = [
+            ft.DataColumn(ft.Text("ID")),
+            ft.DataColumn(ft.Text("Nome Real")),
+            ft.DataColumn(ft.Text("Nome de Herói")),
+            ft.DataColumn(ft.Text("Gênero")),
+            ft.DataColumn(ft.Text("Altura")),
+            ft.DataColumn(ft.Text("Peso")),
+            ft.DataColumn(ft.Text("Data de Nascimento")),
+            ft.DataColumn(ft.Text("Local de Nascimento")),
+            ft.DataColumn(ft.Text("Força")),
+            ft.DataColumn(ft.Text("Popularidade")),
+            ft.DataColumn(ft.Text("Status")),
+            ft.DataColumn(ft.Text("")),
+        ]
+
+        linhas = []
+        for heroi in herois:
+            linhas.append(
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(heroi["id"])),
+                        ft.DataCell(ft.Text(heroi["real_name"])),
+                        ft.DataCell(ft.Text(heroi["hero_name"])),
+                        ft.DataCell(ft.Text(heroi["gender"])),
+                        ft.DataCell(ft.Text(heroi["height"])),
+                        ft.DataCell(ft.Text(heroi["weight"])),
+                        ft.DataCell(ft.Text(heroi["birth_date"])),
+                        ft.DataCell(ft.Text(heroi["birth_place"])),
+                        ft.DataCell(ft.Text(heroi["strength_level"])),
+                        ft.DataCell(ft.Text(heroi["popularity"])),
+                        ft.DataCell(ft.Text(heroi["status"])),
+                        ft.DataCell(
+                            ft.IconButton(
+                                icon=ft.icons.EDIT,
+                                on_click=lambda _: exibir_snackbar("Herói editado!"),
+                                tooltip="Editar Herói",
+                            ),
+                        ),
+                    ]
+                )
+            )
+
         return ft.Container(
             ft.Column(
                 [
-                    ft.Text("Gerenciar Heróis", theme_style="headlineSmall"),
-                    ft.ElevatedButton(
-                        "Criar Herói",
-                        on_click=lambda _: exibir_snackbar("Herói criado!"),
+                    ft.Row(
+                        [
+                            ft.Text("Gerenciar Heróis", theme_style="headlineSmall"),
+                            ft.Text(f"{len(herois)}", theme_style="bodySmall", expand=True),
+                            ft.IconButton(
+                                icon=ft.icons.ADD,
+                                on_click=lambda _: criar_heroi(),
+                                tooltip="Criar Herói",
+                            ),
+                            ft.IconButton(
+                                icon=ft.icons.REFRESH,
+                                on_click=lambda _: atualizar_heroi(),
+                                tooltip="Atualizar Heróis",
+                            ),
+                        ],
+                        alignment=ft.MainAxisAlignment.START,
                     ),
-                    ft.ElevatedButton(
-                        "Editar Herói",
-                        on_click=lambda _: exibir_snackbar("Herói editado!"),
-                    ),
-                    ft.ElevatedButton(
-                        "Consultar Herói",
-                        on_click=lambda _: exibir_snackbar("Herói consultado!"),
+                    ft.DataTable(
+                        columns=colunas,
+                        rows=linhas,
+                        column_spacing=40,
                     ),
                 ],
             ),
@@ -161,4 +251,5 @@ def main(page: ft.Page):
 
     change_content("home")
 
-ft.app(target=main) 
+
+ft.app(target=main)
