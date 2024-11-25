@@ -1,5 +1,5 @@
 -- Inserir tipos de crimes
-    INSERT INTO tipos_crimes (nome)
+    INSERT INTO crime (nome)
     VALUES 
         ('Homicídio'),
         ('Sequestro'),
