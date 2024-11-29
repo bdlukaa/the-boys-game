@@ -17,55 +17,13 @@
 
 -- inserir ocorrencias
 
--- Buscar o ID do herói pelo nome (necessario realizar antes da inserção de um novo crime)
-    SELECT id FROM heroes 
-    WHERE hero_name ='Starlight';
-
--- Buscar o ID do crime pelo nome (necessario realizar antes da inserção de um novo crime)
-    SELECT id FROM crime 
-    WHERE nome ='Conspiração';
-
 -- Inserir o crime na tabela de ocorrências
     INSERT INTO ocorrencias (heroi_id, crime_id, descricao, data_crime, severidade)
-    VALUES (heroi_id, crime_id, 'Trabalhou secretamente com Hughie e os Boys contra a Vought.', CURRENT_DATE, 3);
-
-
-
--- insira no sql pra visualizar o comportamento caso precise
-DO $$
-DECLARE
-    heroi_id INT;
-    crime_id INT;
-BEGIN
-    -- Buscar o ID do herói pelo nome
-    SELECT id INTO heroi_id 
-    FROM heroes
-    WHERE hero_name ='John';
-
-    -- Verificar se o herói foi encontrado
-    IF heroi_id IS NULL THEN
-        RAISE EXCEPTION 'Herói não encontrado';
-		RAISE NOTICE 'Heroi ID é %', heroi_id;
-    END IF;
-
-    -- Buscar o ID do crime pelo nome
-    SELECT id INTO crime_id 
-    FROM crime
-    WHERE nome ='Sequestro';
-
-    -- Verificar se o crime foi encontrado
-    IF crime_id IS NULL THEN
-        RAISE EXCEPTION 'Crime não encontrado';
-		RAISE NOTICE 'Crime ID é %', crime_id;
-    END IF;
-
-    -- Inserir o crime na tabela de ocorrências
-    INSERT INTO ocorrencias (heroi_id, crime_id, descricao, data_crime, severidade)
-    VALUES (heroi_id, crime_id, 'iriri', CURRENT_DATE, 3);
-
-END $$;
-
-SELECT * FROM ocorrencias ;
+    VALUES 
+    ((SELECT id FROM heroes WHERE hero_name ='Maeve'), 
+        (SELECT id FROM crime WHERE nome ='Conspiração'), 
+        'Trabalhou secretamente com Hughie e os Boys contra a Vought.',
+         CURRENT_DATE, 5);
 
 
 -- selects
@@ -107,6 +65,6 @@ FROM ocorrencias AS o
 JOIN heroes AS h ON o.heroi_id = h.id
 JOIN crime AS c ON o.crime_id = c.id
 WHERE 
-    o.severidade = 3
+    o.severidade = 3 -- alterar para a severidade que quiser
 ORDER BY 
     o.data_crime DESC;
