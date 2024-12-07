@@ -179,28 +179,132 @@ def main(page: ft.Page):
         herois = [
             {
                 "id": 1,
-                "real_name": "Bruce Wayne",
-                "hero_name": "Batman",
+                "real_name": "John Gillman",
+                "hero_name": "Homelander",
                 "gender": "Masculino",
-                "height": 1.88,
+                "height": 1.83,
                 "weight": 95,
-                "birth_date": "1939-05-19",
-                "birth_place": "Gotham City",
-                "strength_level": 85,
-                "popularity": 90,
+                "birth_date": "1979-06-19",
+                "birth_place": "Laboratório Vought",
+                "strength_level": 99,
+                "popularity": 70,
                 "status": "Ativo",
             },
             {
                 "id": 2,
-                "real_name": "Diana Prince",
-                "hero_name": "Mulher Maravilha",
+                "real_name": "Annie January",
+                "hero_name": "Starlight",
                 "gender": "Feminino",
+                "height": 1.68,
+                "weight": 60,
+                "birth_date": "1993-04-05",
+                "birth_place": "Des Moines, Iowa",
+                "strength_level": 80,
+                "popularity": 85,
+                "status": "Ativo",
+            },
+            {
+                "id": 3,
+                "real_name": "Billy Butcher",
+                "hero_name": "Butcher",
+                "gender": "Masculino",
                 "height": 1.80,
-                "weight": 75,
-                "birth_date": "1941-10-21",
-                "birth_place": "Themyscira",
-                "strength_level": 95,
-                "popularity": 80,
+                "weight": 85,
+                "birth_date": "1975-03-12",
+                "birth_place": "Londres, Inglaterra",
+                "strength_level": 70,
+                "popularity": 60,
+                "status": "Ativo",
+            },
+            {
+                "id": 4,
+                "real_name": "Hughie Campbell",
+                "hero_name": "Wee Hughie",
+                "gender": "Masculino",
+                "height": 1.75,
+                "weight": 70,
+                "birth_date": "1990-08-21",
+                "birth_place": "Nova York, EUA",
+                "strength_level": 50,
+                "popularity": 65,
+                "status": "Ativo",
+            },
+            {
+                "id": 5,
+                "real_name": "Kevin Moskowitz",
+                "hero_name": "The Deep",
+                "gender": "Masculino",
+                "height": 1.80,  # Valor estimado
+                "weight": 90,  # Valor estimado
+                "birth_date": "1988-07-10",  # Data aproximada
+                "birth_place": "Sandusky, Ohio",
+                "strength_level": 65,
+                "popularity": 40,
+                "status": "Ativo",
+            },
+            {
+                "id": 6,
+                "real_name": "Queen Maeve",
+                "hero_name": "Queen Maeve",
+                "gender": "Feminino",
+                "height": 1.75,  # Valor estimado
+                "weight": 75,  # Valor estimado
+                "birth_date": "1980-05-15",  # Data aproximada
+                "birth_place": "Desconhecido",
+                "strength_level": 85,
+                "popularity": 75,
+                "status": "Ativo",
+            },
+            {
+                "id": 7,
+                "real_name": "Reggie Franklin",
+                "hero_name": "A-Train",
+                "gender": "Masculino",
+                "height": 1.78,  # Valor estimado
+                "weight": 80,  # Valor estimado
+                "birth_date": "1989-11-20",  # Data aproximada
+                "birth_place": "Desconhecido",
+                "strength_level": 70,
+                "popularity": 50,
+                "status": "Ativo",
+            },
+            {
+                "id": 8,
+                "real_name": "Marvin T. Milk",
+                "hero_name": "Mother's Milk",
+                "gender": "Masculino",
+                "height": 1.85,  # Valor estimado
+                "weight": 100,  # Valor estimado
+                "birth_date": "1978-06-02",  # Data aproximada
+                "birth_place": "Desconhecido",
+                "strength_level": 60,
+                "popularity": 55,
+                "status": "Ativo",
+            },
+            {
+                "id": 9,
+                "real_name": "Frenchie",
+                "hero_name": "Frenchie",
+                "gender": "Masculino",
+                "height": 1.70,  # Valor estimado
+                "weight": 70,  # Valor estimado
+                "birth_date": "1976-04-08",  # Data aproximada
+                "birth_place": "Desconhecido",
+                "strength_level": 55,
+                "popularity": 50,
+                "status": "Ativo",
+            },
+            {
+                "id": 10,
+                "real_name": "Kimiko Miyashiro",
+                "hero_name": "The Female",
+                "gender": "Feminino",
+                "height": 1.65,  # Valor estimado
+                "weight": 60,  # Valor estimado
+                "birth_date": "1991-09-15",  # Data aproximada
+                "birth_place": "Japão",
+                "strength_level": 80,
+                "popularity": 60,
                 "status": "Ativo",
             },
         ]
@@ -279,9 +383,9 @@ def main(page: ft.Page):
             rows=linhas,
             column_spacing=40,
         )
-
+        
         return ft.Container(
-            ft.Column(
+            ft.ListView(
                 [
                     ft.Row(
                         [
@@ -364,18 +468,74 @@ def main(page: ft.Page):
 
         crimes = [
             {
-                "nome": "Roubo a banco",
-                "descricao": "Roubo a banco central de Gotham City.",
-                "data": "2024-11-20",
-                "heroi_responsavel": "Batman",
+                "nome": "Destruição do avião",
+                "descricao": "Homelander intencionalmente não salvou o avião, causando a morte de todos a bordo.",
+                "data": "2024-10-20",
+                "heroi_responsavel": "Homelander",
+                "severidade": 10,
+            },
+            {
+                "nome": "Assassinato de Madelyn Stillwell",
+                "descricao": "Homelander matou Madelyn Stillwell após descobrir suas mentiras.",
+                "data": "2024-10-18",
+                "heroi_responsavel": "Homelander",
+                "severidade": 9,
+            },
+            {
+                "nome": "Ataque terrorista",
+                "descricao": "Homelander ataca civis em um protesto.",
+                "data": "2024-11-05",
+                "heroi_responsavel": "Homelander",
+                "severidade": 10,
+            },
+            {
+                "nome": "Consumo de drogas",
+                "descricao": "A-Train usa Composto V para melhorar sua velocidade, colocando em risco sua saúde.",
+                "data": "2024-11-10",
+                "heroi_responsavel": "A-Train",
+                "severidade": 7,
+            },
+            {
+                "nome": "Assédio sexual",
+                "descricao": "The Deep assedia Starlight em seu primeiro dia na equipe.",
+                "data": "2024-10-15",
+                "heroi_responsavel": "The Deep",
                 "severidade": 8,
             },
             {
-                "nome": "Sequestro",
-                "descricao": "Sequestro da filha do prefeito.",
-                "data": "2024-11-18",
-                "heroi_responsavel": "Mulher Maravilha",
+                "nome": "Negligência",
+                "descricao": "Queen Maeve falha em impedir um acidente de trânsito por medo de se expor.",
+                "data": "2024-11-01",
+                "heroi_responsavel": "Queen Maeve",
+                "severidade": 6,
+            },
+            {
+                "nome": "Abuso de poder",
+                "descricao": "Homelander usa seus poderes para intimidar e manipular pessoas.",
+                "data": "2024-10-25",
+                "heroi_responsavel": "Homelander",
+                "severidade": 8,
+            },
+            {
+                "nome": "Violência contra animais",
+                "descricao": "The Deep maltrata animais marinhos em diversas ocasiões.",
+                "data": "2024-11-08",
+                "heroi_responsavel": "The Deep",
+                "severidade": 5,
+            },
+            {
+                "nome": "Corrupção",
+                "descricao": "Vought encobre crimes e ações ilegais dos heróis em troca de lucro.",
+                "data": "2024-10-16",
+                "heroi_responsavel": "Vought",
                 "severidade": 9,
+            },
+            {
+                "nome": "Manipulação da mídia",
+                "descricao": "Vought manipula a mídia para controlar a imagem pública dos heróis.",
+                "data": "2024-10-28",
+                "heroi_responsavel": "Vought",
+                "severidade": 7,
             },
         ]
 
@@ -539,20 +699,84 @@ def main(page: ft.Page):
 
         missoes = [
             {
-                "nome": "Salvar o mundo",
-                "descricao": "Impedir o meteoro de colidir com a Terra.",
-                "dificuldade": 10,
-                "herois_designados": ["Batman", "Mulher Maravilha"],
+                "nome": "Infiltração na Igreja Coletiva",
+                "descricao": "Starlight se infiltra na Igreja Coletiva para obter informações.",
+                "dificuldade": 7,
+                "herois_designados": ["Starlight"],
                 "resultado": "Sucesso",
-                "recompensa": "Força + 5",
+                "recompensa": "Popularidade + 15",
             },
             {
-                "nome": "Resgatar reféns",
-                "descricao": "Libertar os reféns do banco central.",
+                "nome": "Resgate de reféns no banco",
+                "descricao": "Os Sete tentam resgatar reféns em um assalto a banco.",
+                "dificuldade": 8,
+                "herois_designados": ["Homelander", "Queen Maeve", "A-Train", "The Deep", "Black Noir"],
+                "resultado": "Fracasso parcial",
+                "recompensa": "Popularidade - 5",
+            },
+            {
+                "nome": "Impedir ataque terrorista",
+                "descricao": "Homelander impede um ataque terrorista em Nova York.",
+                "dificuldade": 9,
+                "herois_designados": ["Homelander"],
+                "resultado": "Sucesso",
+                "recompensa": "Popularidade + 20",
+            },
+            {
+                "nome": "Desativar bomba",
+                "descricao": "Frenchie desativa uma bomba em um prédio do governo.",
+                "dificuldade": 6,
+                "herois_designados": ["Frenchie"],
+                "resultado": "Sucesso",
+                "recompensa": "Nenhuma",
+            },
+            {
+                "nome": "Resgatar pessoas de incêndio",
+                "descricao": "Starlight e Queen Maeve resgatam pessoas de um incêndio em um hospital.",
+                "dificuldade": 8,
+                "herois_designados": ["Starlight", "Queen Maeve"],
+                "resultado": "Sucesso",
+                "recompensa": "Popularidade + 10",
+            },
+            {
+                "nome": "Capturar super-terrorista",
+                "descricao": "Homelander e Black Noir capturam um super-terrorista em fuga.",
+                "dificuldade": 10,
+                "herois_designados": ["Homelander", "Black Noir"],
+                "resultado": "Sucesso",
+                "recompensa": "Popularidade + 15",
+            },
+            {
+                "nome": "Investigar atividades suspeitas",
+                "descricao": "Butcher e Hughie investigam atividades suspeitas da Vought.",
+                "dificuldade": 5,
+                "herois_designados": ["Butcher", "Hughie"],
+                "resultado": "Sucesso",
+                "recompensa": "Informação valiosa",
+            },
+            {
+                "nome": "Proteger o presidente",
+                "descricao": "Homelander e Queen Maeve protegem o presidente durante um evento público.",
                 "dificuldade": 7,
-                "herois_designados": ["Batman"],
+                "herois_designados": ["Homelander", "Queen Maeve"],
+                "resultado": "Sucesso",
+                "recompensa": "Reconhecimento do governo",
+            },
+            {
+                "nome": "Encontrar cura para o Composto V",
+                "descricao": "Mother's Milk e Frenchie procuram uma cura para o Composto V.",
+                "dificuldade": 9,
+                "herois_designados": ["Mother's Milk", "Frenchie"],
                 "resultado": "Fracasso",
-                "recompensa": "Popularidade - 10",
+                "recompensa": "Nenhuma",
+            },
+            {
+                "nome": "Libertar a Female",
+                "descricao": "Butcher e Hughie libertam a Female de um laboratório da Vought.",
+                "dificuldade": 6,
+                "herois_designados": ["Butcher", "Hughie"],
+                "resultado": "Sucesso",
+                "recompensa": "Aliança com a Female",
             },
         ]
 
