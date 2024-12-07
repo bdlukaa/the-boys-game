@@ -108,12 +108,69 @@ def main(page: ft.Page):
             ),
             alignment=ft.alignment.center,
             expand=True,
-    )
+        )
 
     def herois_view():
         def criar_heroi(e):
+            # Limpar os campos do diálogo
+            for control in dlg_cria_heroi.content.controls:
+                if isinstance(control, ft.TextField):
+                    control.value = ""
             page.dialog = dlg_cria_heroi
             dlg_cria_heroi.open = True
+            page.update()
+
+        def salvar_heroi(e):
+            # Obter os valores dos campos de texto
+            novo_heroi = {
+                "id": len(herois) + 1,  # Incrementar o ID
+                "real_name": dlg_cria_heroi.content.controls[0].value,
+                "hero_name": dlg_cria_heroi.content.controls[1].value,
+                "gender": dlg_cria_heroi.content.controls[2].value,
+                "height": float(dlg_cria_heroi.content.controls[3].value),
+                "weight": float(dlg_cria_heroi.content.controls[4].value),
+                "birth_date": dlg_cria_heroi.content.controls[5].value,
+                "birth_place": dlg_cria_heroi.content.controls[6].value,
+                "strength_level": int(dlg_cria_heroi.content.controls[7].value),
+                "popularity": int(dlg_cria_heroi.content.controls[8].value),
+                "status": dlg_cria_heroi.content.controls[9].value,
+            }
+
+            # Adicionar o novo herói à lista de heróis
+            herois.append(novo_heroi)
+
+            # Adicionar uma nova linha à tabela
+            tabela_herois.rows.append(
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(novo_heroi["id"])),
+                        ft.DataCell(ft.Text(novo_heroi["real_name"])),
+                        ft.DataCell(ft.Text(novo_heroi["hero_name"])),
+                        ft.DataCell(ft.Text(novo_heroi["gender"])),
+                        ft.DataCell(ft.Text(novo_heroi["height"])),
+                        ft.DataCell(ft.Text(novo_heroi["weight"])),
+                        ft.DataCell(ft.Text(novo_heroi["birth_date"])),
+                        ft.DataCell(ft.Text(novo_heroi["birth_place"])),
+                        ft.DataCell(ft.Text(novo_heroi["strength_level"])),
+                        ft.DataCell(ft.Text(novo_heroi["popularity"])),
+                        ft.DataCell(ft.Text(novo_heroi["status"])),
+                        ft.DataCell(
+                            ft.IconButton(
+                                icon=ft.icons.EDIT,
+                                tooltip="Editar Herói",
+                                on_click=lambda e: exibir_snackbar(
+                                    f"Editar Herói {novo_heroi['id']}"
+                                ),
+                            )
+                        ),
+                    ]
+                )
+            )
+
+            # Fechar o diálogo
+            dlg_cria_heroi.open = False
+
+            # Atualizar a página
             page.update()
 
         def atualizar_heroi():
@@ -183,7 +240,9 @@ def main(page: ft.Page):
                             ft.IconButton(
                                 icon=ft.icons.EDIT,
                                 tooltip="Editar Herói",
-                                on_click=lambda e: exibir_snackbar(f"Editar Herói {heroi['id']}"),
+                                on_click=lambda e: exibir_snackbar(
+                                    f"Editar Herói {heroi['id']}"
+                                ),
                             )
                         ),
                     ]
@@ -207,10 +266,18 @@ def main(page: ft.Page):
                 ]
             ),
             actions=[
-                ft.TextButton("Cancelar", on_click=lambda e: page.close(dlg_cria_heroi)),
-                ft.TextButton("Criar", on_click=lambda e: exibir_snackbar("Herói criado!")),
+                ft.TextButton(
+                    "Cancelar", on_click=lambda e: page.close(dlg_cria_heroi)
+                ),
+                ft.TextButton("Criar", on_click=salvar_heroi),
             ],
             on_dismiss=lambda e: print("Dialog dismissed!"),
+        )
+
+        tabela_herois = ft.DataTable(
+            columns=colunas,
+            rows=linhas,
+            column_spacing=40,
         )
 
         return ft.Container(
@@ -219,7 +286,9 @@ def main(page: ft.Page):
                     ft.Row(
                         [
                             ft.Text("Gerenciar Heróis", theme_style="headlineSmall"),
-                            ft.Text(f"{len(herois)}", theme_style="bodySmall", expand=True),
+                            ft.Text(
+                                f"{len(herois)}", theme_style="bodySmall", expand=True
+                            ),
                             ft.IconButton(
                                 icon=ft.icons.ADD,
                                 on_click=criar_heroi,
@@ -233,11 +302,7 @@ def main(page: ft.Page):
                         ],
                         alignment=ft.MainAxisAlignment.START,
                     ),
-                    ft.DataTable(
-                        columns=colunas,
-                        rows=linhas,
-                        column_spacing=40,
-                    ),
+                    tabela_herois,
                 ],
             ),
             expand=True,
@@ -245,8 +310,53 @@ def main(page: ft.Page):
 
     def crimes_view():
         def criar_crime(e):
+            # Limpar os campos do diálogo
+            for control in dlg_cria_crime.content.controls:
+                if isinstance(control, ft.TextField):
+                    control.value = ""
             page.dialog = dlg_cria_crime
             dlg_cria_crime.open = True
+            page.update()
+
+        def salvar_crime(e):
+            # Obter os valores dos campos de texto
+            novo_crime = {
+                "nome": dlg_cria_crime.content.controls[0].value,
+                "descricao": dlg_cria_crime.content.controls[1].value,
+                "data": dlg_cria_crime.content.controls[2].value,
+                "heroi_responsavel": dlg_cria_crime.content.controls[3].value,
+                "severidade": int(dlg_cria_crime.content.controls[4].value),
+            }
+
+            # Adicionar o novo crime à lista de crimes
+            crimes.append(novo_crime)
+
+            # Adicionar uma nova linha à tabela
+            tabela_crimes.rows.append(
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(novo_crime["nome"])),
+                        ft.DataCell(ft.Text(novo_crime["descricao"])),
+                        ft.DataCell(ft.Text(novo_crime["data"])),
+                        ft.DataCell(ft.Text(novo_crime["heroi_responsavel"])),
+                        ft.DataCell(ft.Text(novo_crime["severidade"])),
+                        ft.DataCell(
+                            ft.IconButton(
+                                icon=ft.icons.EDIT,
+                                tooltip="Editar Crime",
+                                on_click=lambda e: exibir_snackbar(
+                                    f"Editar Crime {novo_crime['nome']}"
+                                ),
+                            )
+                        ),
+                    ]
+                )
+            )
+
+            # Fechar o diálogo
+            dlg_cria_crime.open = False
+
+            # Atualizar a página
             page.update()
 
         def atualizar_crime():
@@ -292,7 +402,9 @@ def main(page: ft.Page):
                             ft.IconButton(
                                 icon=ft.icons.EDIT,
                                 tooltip="Editar Crime",
-                                on_click=lambda e: exibir_snackbar(f"Editar Crime {crime['nome']}"),
+                                on_click=lambda e: exibir_snackbar(
+                                    f"Editar Crime {crime['nome']}"
+                                ),
                             )
                         ),
                     ]
@@ -311,10 +423,18 @@ def main(page: ft.Page):
                 ]
             ),
             actions=[
-                ft.TextButton("Cancelar", on_click=lambda e: page.close(dlg_cria_crime)),
-                ft.TextButton("Criar", on_click=lambda e: exibir_snackbar("Crime criado!")),
+                ft.TextButton(
+                    "Cancelar", on_click=lambda e: page.close(dlg_cria_crime)
+                ),
+                ft.TextButton("Criar", on_click=salvar_crime),
             ],
             on_dismiss=lambda e: print("Dialog dismissed!"),
+        )
+
+        tabela_crimes = ft.DataTable(
+            columns=colunas,
+            rows=linhas,
+            column_spacing=40,
         )
 
         return ft.Container(
@@ -323,7 +443,11 @@ def main(page: ft.Page):
                     ft.Row(
                         [
                             ft.Text("Gerenciar Crimes", theme_style="headlineSmall"),
-                            ft.Text(f"{len(crimes)} crimes", theme_style="bodySmall", expand=True),
+                            ft.Text(
+                                f"{len(crimes)} crimes",
+                                theme_style="bodySmall",
+                                expand=True,
+                            ),
                             ft.IconButton(
                                 icon=ft.icons.ADD,
                                 on_click=criar_crime,
@@ -337,11 +461,7 @@ def main(page: ft.Page):
                         ],
                         alignment=ft.MainAxisAlignment.START,
                     ),
-                    ft.DataTable(
-                        columns=colunas,
-                        rows=linhas,
-                        column_spacing=40,
-                    ),
+                    tabela_crimes
                 ],
             ),
             expand=True,
@@ -363,8 +483,55 @@ def main(page: ft.Page):
 
     def missoes_view():
         def criar_missao(e):
+            # Limpar os campos do diálogo
+            for control in dlg_cria_missao.content.controls:
+                if isinstance(control, ft.TextField):
+                    control.value = ""
             page.dialog = dlg_cria_missao
             dlg_cria_missao.open = True
+            page.update()
+
+        def salvar_missao(e):
+            # Obter os valores dos campos de texto
+            nova_missao = {
+                "nome": dlg_cria_missao.content.controls[0].value,
+                "descricao": dlg_cria_missao.content.controls[1].value,
+                "dificuldade": int(dlg_cria_missao.content.controls[2].value),
+                "herois_designados": dlg_cria_missao.content.controls[3].value.split(","),
+                "resultado": dlg_cria_missao.content.controls[4].value,
+                "recompensa": dlg_cria_missao.content.controls[5].value,
+            }
+
+            # Adicionar a nova missão à lista de missões
+            missoes.append(nova_missao)
+
+            # Adicionar uma nova linha à tabela
+            tabela_missoes.rows.append(
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(nova_missao["nome"])),
+                        ft.DataCell(ft.Text(nova_missao["descricao"])),
+                        ft.DataCell(ft.Text(nova_missao["dificuldade"])),
+                        ft.DataCell(ft.Text(", ".join(nova_missao["herois_designados"]))),
+                        ft.DataCell(ft.Text(nova_missao["resultado"])),
+                        ft.DataCell(ft.Text(nova_missao["recompensa"])),
+                        ft.DataCell(
+                            ft.IconButton(
+                                icon=ft.icons.EDIT,
+                                tooltip="Editar Missão",
+                                on_click=lambda e: exibir_snackbar(
+                                    f"Editar Missão {nova_missao['nome']}"
+                                ),
+                            )
+                        ),
+                    ]
+                )
+            )
+
+            # Fechar o diálogo
+            dlg_cria_missao.open = False
+
+            # Atualizar a página
             page.update()
 
         def atualizar_missao():
@@ -414,7 +581,9 @@ def main(page: ft.Page):
                             ft.IconButton(
                                 icon=ft.icons.EDIT,
                                 tooltip="Editar Missão",
-                                on_click=lambda e: exibir_snackbar(f"Editar Missão {missao['nome']}"),
+                                on_click=lambda e: exibir_snackbar(
+                                    f"Editar Missão {missao['nome']}"
+                                ),
                             )
                         ),
                     ]
@@ -428,16 +597,24 @@ def main(page: ft.Page):
                     ft.TextField(label="Nome"),
                     ft.TextField(label="Descrição"),
                     ft.TextField(label="Dificuldade"),
-                    ft.TextField(label="Heróis Designados"),
+                    ft.TextField(label="Heróis Designados (separados por vírgula)"),
                     ft.TextField(label="Resultado"),
                     ft.TextField(label="Recompensa"),
                 ]
             ),
             actions=[
-                ft.TextButton("Cancelar", on_click=lambda e: page.close(dlg_cria_missao)),
-                ft.TextButton("Criar", on_click=lambda e: exibir_snackbar("Missão criada!")),
+                ft.TextButton(
+                    "Cancelar", on_click=lambda e: page.close(dlg_cria_missao)
+                ),
+                ft.TextButton("Criar", on_click=salvar_missao),
             ],
             on_dismiss=lambda e: print("Dialog dismissed!"),
+        )
+
+        tabela_missoes = ft.DataTable(
+            columns=colunas,
+            rows=linhas,
+            column_spacing=40,
         )
 
         return ft.Container(
@@ -446,7 +623,11 @@ def main(page: ft.Page):
                     ft.Row(
                         [
                             ft.Text("Gerenciar Missões", theme_style="headlineSmall"),
-                            ft.Text(f"{len(missoes)} missões", theme_style="bodySmall", expand=True),
+                            ft.Text(
+                                f"{len(missoes)} missões",
+                                theme_style="bodySmall",
+                                expand=True,
+                            ),
                             ft.IconButton(
                                 icon=ft.icons.ADD,
                                 on_click=criar_missao,
@@ -460,11 +641,7 @@ def main(page: ft.Page):
                         ],
                         alignment=ft.MainAxisAlignment.START,
                     ),
-                    ft.DataTable(
-                        columns=colunas,
-                        rows=linhas,
-                        column_spacing=40,
-                    ),
+                    tabela_missoes
                 ],
             ),
             expand=True,
