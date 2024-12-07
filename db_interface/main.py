@@ -591,3 +591,8 @@ def main(page: ft.Page):
             ),
             expand=True,  # Expande o container para preencher o espaço disponível
         )
+        
+    change_content("home")
+
+
+ft.app(target=main)
